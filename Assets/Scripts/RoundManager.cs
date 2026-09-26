@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum GameTeam
 {
@@ -51,17 +52,19 @@ public class RoundManager : MonoBehaviour
 
     private void Update()
     {
+        RoundTimeLeft -= Time.deltaTime;
         if (RoundTimeLeft <= 0)
         {
             if (!roundOver)
             {
                 EndRound();
             }
+
+            if (RoundTimeLeft <= -5)
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            }
             return;
-        }
-        else
-        {
-            RoundTimeLeft -= Time.deltaTime;
         }
         
 
@@ -85,6 +88,8 @@ public class RoundManager : MonoBehaviour
             GameTeam.None => "DRAW!",
             _ => "ERROR IDK WHO WON"
         };
+        
+        TimeLeftText.gameObject.SetActive(false);
     }
 
     public void AddToScore(GameTeam team, int amount)
