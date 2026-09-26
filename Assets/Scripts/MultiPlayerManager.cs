@@ -43,12 +43,17 @@ public class MultiPlayerManager : MonoBehaviour
         int pCount = 1;
         foreach (PlayerSpawn ratSpawn in ratSpawns)
         {
-            PlayerInput rat = PlayerInput.Instantiate(
+             PlayerInput rat = PlayerInput.Instantiate(
                 RatPrefab,
                 pairWithDevice: playerControllers[pCount]
             );
             rat.transform.position = ratSpawn.transform.position;
             pCount++;
+
+            if (pCount >= playerControllers.Length)
+            {
+                break;
+            }
         }
     }
 }

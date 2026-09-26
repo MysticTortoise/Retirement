@@ -1,12 +1,14 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public enum HumanState
 {
     Idle,
-    Walking
+    Walking,
+    Attacked,
 }
 
 public class HumanBase : MonoBehaviour
@@ -26,8 +28,8 @@ public class HumanBase : MonoBehaviour
     private float targetX;
     private HumanState state;
 
-    private Rigidbody2D rb;
-    private BoxCollider2D box;
+    [NonSerialized] public Rigidbody2D rb;
+    protected BoxCollider2D box;
 
 
     protected virtual float GetAcceleration()
@@ -53,7 +55,7 @@ public class HumanBase : MonoBehaviour
         BeginIdleWalk();
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         switch (state)
         {

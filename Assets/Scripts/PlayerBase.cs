@@ -8,6 +8,11 @@ using UnityEngine.UIElements;
 
 public abstract class PlayerBase : MonoBehaviour
 {
+    private static readonly int MovingID = Animator.StringToHash("Moving");
+    private static readonly int AirborneID = Animator.StringToHash("Airborne");
+    private static readonly int RightID = Animator.StringToHash("Right");
+    
+    
     [SerializeField] protected float Acceleration;
     [SerializeField] protected float Deceleration;
     [SerializeField] protected float MaxSpeed;
@@ -20,7 +25,9 @@ public abstract class PlayerBase : MonoBehaviour
     protected Rigidbody2D rb;
     protected BoxCollider2D box;
     
-    private Vector2 moveInput;
+    protected Vector2 moveInput;
+    
+    protected Animator animator;
 
     public abstract GameTeam GetTeam();
 
@@ -49,12 +56,22 @@ public abstract class PlayerBase : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
+
+        animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
         MovementTick();
+        UpdateAnims();
+    }
+    
+    protected virtual void UpdateAnims()
+    {
+        animator.SetBool(MovingID, Mathf.Abs(rb.linearVelocityX)  > 0.1f);
+        animator.SetBool(AirborneID, !IsGrounded());
+        animator.SetBool(RightID, rb.linearVelocityX > 0);
     }
 
     private void MovementTick()
@@ -136,9 +153,12 @@ public abstract class PlayerBase : MonoBehaviour
 
     private void OnDrawGizmos()
     {
+        if (!rb)
+            return;
+        
         Handles.color = Color.gray;
         
-        Handles.Label(transform.position, "is in cs: " + IsInCrawlspace());
+        Handles.Label(transform.position, moveInput.ToString());
 
         Gizmos.color = Color.limeGreen;
         Vector2 center = (Vector2)box.bounds.center - new Vector2(0, box.bounds.extents.y);
@@ -146,14 +166,14 @@ public abstract class PlayerBase : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
 
-    protected virtual void KillHuman(HumanBase target)
+    public virtual void KillHuman(HumanBase target)
     {
         target.Kill();
         RoundManager.instance.AddToScore(GetTeam(), 1);
     }
     
     // ReSharper disable Unity.PerformanceAnalysis
-    protected HumanBase CheckForOverlappingHuman()
+    protected KillableHuman CheckForOverlappingHuman()
     {
         Collider2D humanCol = 
             Physics2D.OverlapBox(box.bounds.center, box.bounds.size, 0, HumanTargetLayer);
@@ -163,6 +183,6 @@ public abstract class PlayerBase : MonoBehaviour
             return null;
         }
 
-        return humanCol.GetComponent<HumanBase>();
+        return humanCol.GetComponent<KillableHuman>();
     }
 }

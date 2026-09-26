@@ -25,6 +25,16 @@
                     "interactions": "Press",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "KILL",
+                    "type": "Button",
+                    "id": "bf31b31f-9e0f-4b00-90f8-1918cec92d33",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -88,7 +98,7 @@
                     "id": "94119619-1872-4e96-aa89-85ebd7d4e29c",
                     "path": "<Joystick>/stick",
                     "interactions": "",
-                    "processors": "",
+                    "processors": "StickDeadzone",
                     "groups": ";Controller",
                     "action": "Move",
                     "isComposite": false,
@@ -113,6 +123,50 @@
                     "processors": "",
                     "groups": ";Controller",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "02def6b0-241d-4b44-bd8b-670c33d0d7fc",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "KILL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ed114151-6bc6-44f6-b845-3e13e177a9ed",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Controller",
+                    "action": "KILL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b4cba2a4-f09a-45cc-971e-ffc3726b6965",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Controller",
+                    "action": "KILL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ac6b19ec-ecc3-4730-8953-aef0cdeaa73c",
+                    "path": "<HID::2DC8-6012>/button4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Controller",
+                    "action": "KILL",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

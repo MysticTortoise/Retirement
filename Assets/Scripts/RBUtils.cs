@@ -17,4 +17,16 @@ public class RBUtils
             rb.linearVelocityX = Mathf.Sign(rb.linearVelocityX) * maxSpeed;
         }
     }
+
+    public static void SetRBFreeze(Rigidbody2D rb, bool frozen)
+    {
+        if (frozen)
+        {
+            rb.constraints |= RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        }
+        else
+        {
+            rb.constraints &= ~(RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY);
+        }
+    }
 }

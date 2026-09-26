@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HumanSpawner : MonoBehaviour
 {
@@ -9,10 +10,20 @@ public class HumanSpawner : MonoBehaviour
 
     [SerializeField] private float RespawnTimeAtOneHuman;
     [SerializeField] private int TargetHumanCount;
+    [SerializeField] private float BoundsFactor;
 
     [SerializeField] private GameObject HumanPrefab;
+    [SerializeField] private LayerMask HumanColMask;
 
     private float timer;
+
+    private void Start()
+    {
+        for (int i = 0; i < TargetHumanCount; i++)
+        {
+            SpawnHumanExisting();
+        }
+    }
 
     private void Update()
     {
@@ -36,5 +47,31 @@ public class HumanSpawner : MonoBehaviour
         human.transform.position = transform.position;
 
         humans.Add(humanComp);
+    }
+
+    private void SpawnHumanExisting()
+    {
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 999f, HumanColMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 999f, HumanColMask);
+        float leftDist = leftHit.distance - BoundsFactor;
+        float rightDist = rightHit.distance - BoundsFactor;
+
+        float xPos = Random.Range(-leftDist, rightDist);
+
+        GameObject human = Instantiate(HumanPrefab);
+        var humanComp = human.GetComponent<HumanBase>();
+        human.transform.position = transform.position + Vector3.right * xPos;
+        humans.Add(humanComp);
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 999f, HumanColMask);
+        RaycastHit2D rightHit = Physics2D.Raycast(transform.position, Vector2.right, 999f, HumanColMask);
+        float leftDist = leftHit.distance - BoundsFactor;
+        float rightDist = rightHit.distance - BoundsFactor;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(transform.position - (Vector3.right * leftDist), transform.position + (Vector3.right * rightDist)); 
     }
 }
