@@ -58,17 +58,14 @@ public class PlayerBase : MonoBehaviour
     {
         if (Mathf.Abs(moveInput.x) <= 0.01)
         {
-            rb.AddForceX(rb.linearVelocityX * -GetDeceleration() * Time.deltaTime);
+            rb.AddForceX(RBUtils.GetDecelSpeed(rb, GetDeceleration()));
         }
         else
         {
             rb.AddForceX(moveInput.x * GetAcceleration() * Time.deltaTime);
         }
         
-        if (Mathf.Abs(rb.linearVelocityX) > GetMaxSpeed())
-        {
-            rb.linearVelocityX = GetMaxSpeed() * Mathf.Sign(rb.linearVelocityX);
-        }
+        RBUtils.LimitXSpeed(rb, GetMaxSpeed());
 
         cachedCrawlspace = 0;
     }

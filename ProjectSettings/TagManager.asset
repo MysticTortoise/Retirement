@@ -13,8 +13,8 @@ TagManager:
   - UI
   - WorldCol
   - Player
-  - 
-  - 
+  - Human
+  - HumanColOnly
   - CrawlspaceZone
   - 
   - 

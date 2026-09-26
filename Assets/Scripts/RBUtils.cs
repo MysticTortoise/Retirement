@@ -1,0 +1,20 @@
+﻿
+using UnityEngine;
+
+public class RBUtils
+{
+    public static float GetDecelSpeed(Rigidbody2D rb, float decelAmount)
+    {
+        float decelMin = Mathf.Min(Mathf.Abs(rb.linearVelocityX), decelAmount * Time.deltaTime);
+        float decelSign = -Mathf.Sign(rb.linearVelocityX);
+        return decelMin * decelSign;
+    }
+
+    public static void LimitXSpeed(Rigidbody2D rb, float maxSpeed)
+    {
+        if (Mathf.Abs(rb.linearVelocityX) > maxSpeed)
+        {
+            rb.linearVelocityX = Mathf.Sign(rb.linearVelocityX) * maxSpeed;
+        }
+    }
+}
