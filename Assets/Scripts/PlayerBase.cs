@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 
-public class PlayerBase : MonoBehaviour
+public abstract class PlayerBase : MonoBehaviour
 {
     [SerializeField] protected float Acceleration;
     [SerializeField] protected float Deceleration;
@@ -15,11 +15,14 @@ public class PlayerBase : MonoBehaviour
     [SerializeField] protected float JumpForce;
 
     [SerializeField] protected LayerMask PlayerColMask;
+    [SerializeField] protected LayerMask HumanTargetLayer;
     
-    private Rigidbody2D rb;
-    private BoxCollider2D box;
+    protected Rigidbody2D rb;
+    protected BoxCollider2D box;
     
     private Vector2 moveInput;
+
+    public abstract GameTeam GetTeam();
 
     protected virtual float GetMaxSpeed()
     {
@@ -141,5 +144,25 @@ public class PlayerBase : MonoBehaviour
         Vector2 center = (Vector2)box.bounds.center - new Vector2(0, box.bounds.extents.y);
         var size = new Vector2(box.bounds.size.x * 0.95f, 0.1f);
         Gizmos.DrawWireCube(center, size);
+    }
+
+    protected virtual void KillHuman(HumanBase target)
+    {
+        target.Kill();
+        RoundManager.instance.AddToScore(GetTeam(), 1);
+    }
+    
+    // ReSharper disable Unity.PerformanceAnalysis
+    protected HumanBase CheckForOverlappingHuman()
+    {
+        Collider2D humanCol = 
+            Physics2D.OverlapBox(box.bounds.center, box.bounds.size, 0, HumanTargetLayer);
+
+        if (!humanCol)
+        {
+            return null;
+        }
+
+        return humanCol.GetComponent<HumanBase>();
     }
 }

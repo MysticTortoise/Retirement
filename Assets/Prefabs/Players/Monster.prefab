@@ -132,4 +132,7 @@ MonoBehaviour:
   PlayerColMask:
     serializedVersion: 2
     m_Bits: 192
+  HumanTargetLayer:
+    serializedVersion: 2
+    m_Bits: 256
   CrawlspaceSpeed: 10

@@ -50,7 +50,7 @@ public class HumanBase : MonoBehaviour
         
         rb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
-        GoIdle();
+        BeginIdleWalk();
     }
 
     protected void Update()
@@ -110,7 +110,7 @@ public class HumanBase : MonoBehaviour
         targetX = Random.Range(MinIdleTime, MaxIdleTime);
     }
 
-    protected void BeginIdleWalk()
+    public void BeginIdleWalk()
     {
         float leftMaxDist = GetMaxDistanceInDirection(false);
         float rightMaxDist = GetMaxDistanceInDirection(true);
@@ -124,6 +124,11 @@ public class HumanBase : MonoBehaviour
         float amountToWalk = Random.Range(MinIdleWalkAmount, maxDist - box.bounds.size.x) * signedDir;
         targetX = transform.position.x + amountToWalk;
         EnterState(HumanState.Walking);
+    }
+
+    public void Kill()
+    {
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
