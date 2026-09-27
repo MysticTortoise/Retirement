@@ -230,6 +230,18 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: bf31b31f-9e0f-4b00-90f8-1918cec92d33
     m_ActionName: 'BaseGame/KILL[/Keyboard/e,/Nintendo Wireless Gamepad/button3,/2DC8-6012/button4]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fdfb60d5-9a17-4062-a75e-c70b63a93150
+    m_ActionName: 'BaseGame/Leave[/Keyboard/q]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ec1ba4f7-b9c1-48e5-be6b-e999f4ebf7f5
+    m_ActionName: 'BaseGame/Start[/Keyboard/enter]'
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 9f159cb8-73fa-4f13-bbfb-735dabc24b57
+    m_ActionName: 'BaseGame/Tutorial[/Keyboard/h]'
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: BaseGame

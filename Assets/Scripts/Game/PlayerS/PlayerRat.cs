@@ -53,6 +53,8 @@ public class PlayerRat : PlayerBase
 
     private MaterialPropertyBlock propBlock;
     private SpriteRenderer sr;
+
+    [SerializeField] private AudioSource JumpSnd;
     
     public override GameTeam GetTeam()
     {
@@ -93,6 +95,15 @@ public class PlayerRat : PlayerBase
         sr.GetPropertyBlock(propBlock);
         propBlock.SetFloat(RemapFactorMID, 1);
         sr.SetPropertyBlock(propBlock);
+    }
+
+    public override void Jump()
+    {
+        base.Jump();
+        if (IsGrounded())
+        {
+            JumpSnd.Play();
+        }
     }
 
     public override void SetPlayerID(int id)

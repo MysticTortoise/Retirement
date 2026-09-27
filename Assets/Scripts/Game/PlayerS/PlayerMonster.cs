@@ -28,6 +28,9 @@ public class PlayerMonster : PlayerBase
     private List<TentacleTrap> traps = new(2);
     private float trapCooldown;
 
+    [SerializeField] private AudioSource JumpSndBig;
+    [SerializeField] private AudioSource JumpSndSmall;
+
     public override GameTeam GetTeam()
     {
         return GameTeam.Demon;
@@ -53,19 +56,36 @@ public class PlayerMonster : PlayerBase
         UpdateFormStatus();
     }
 
+    public override void Jump()
+    {
+        base.Jump();
+        if (IsGrounded())
+        {
+            if (IsInCrawlspace())
+            {
+                JumpSndBig.Play();
+            }
+            else
+            {
+                JumpSndSmall.Play();
+            }
+        }
+    }
+
     protected override void Update()
     {
         UpdateFormStatus();
 
         base.Update();
 
-        CheckForRats();
+        if(IsInCrawlspace())
+            CheckForRats();
 
         if (IsConsumingHuman())
             ConsumeHumanTick();
 
         var tendrilTransform = GetTendrilTransform();
-        if (tendrilTransform != null && !IsTrapOnCooldown() && IsInCrawlspace())
+        if (tendrilTransform != null && !IsTrapOnCooldown() && Mathf.Abs(moveInput.y) > 0.5)
         {
             tendrilVisualizer.transform.position = (Vector3)(tendrilTransform?.pos);
             tendrilVisualizer.transform.rotation = (Quaternion)tendrilTransform?.rot;
@@ -244,7 +264,7 @@ public class PlayerMonster : PlayerBase
             return;
         if (!context.started)
             return;
-        if (IsInCrawlspace())
+        if (Mathf.Abs(moveInput.y) > 0.5f)
         {
             TrySpawnTendrilTrap();
         }

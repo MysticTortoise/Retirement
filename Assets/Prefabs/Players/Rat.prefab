@@ -1,5 +1,134 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1782211808841979015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1769948159885676964}
+  - component: {fileID: 3613478208687870043}
+  m_Layer: 7
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1769948159885676964
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782211808841979015}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1005404294128273599}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &3613478208687870043
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1782211808841979015}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 90fc02238483876438eccb8a7d7115b6, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.2
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1001 &1838456316930731473
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -126,7 +255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionId
@@ -141,6 +270,10 @@ PrefabInstance:
       value: ec1ba4f7-b9c1-48e5-be6b-e999f4ebf7f5
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionId
+      value: 9f159cb8-73fa-4f13-bbfb-735dabc24b57
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionName
       value: 'BaseGame/KILL[/Keyboard/e]'
       objectReference: {fileID: 0}
@@ -151,6 +284,10 @@ PrefabInstance:
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_ActionName
       value: 'BaseGame/Start[/Keyboard/enter,/DualSenseGamepadHID/start,/Nintendo Wireless Gamepad/button10]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[5].m_ActionName
+      value: 'BaseGame/Tutorial[/Keyboard/h,/Nintendo Wireless Gamepad/button9,/2DC8-6012/button11,/DualSenseGamepadHID/select]'
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
@@ -206,7 +343,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 1472795445143119214, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1769948159885676964}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1460986167149845253, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       insertIndex: -1
@@ -240,9 +380,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   LaunchForce: 27
-  LatchForceConversion: 60
-  LatchMaxAngle: 70
-  LatchInfluenceSpeed: 150
+  LatchForceConversion: 40
+  LatchMaxAngle: 90
+  LatchInfluenceSpeed: 120
   RatMats:
   - {fileID: 2100000, guid: 2020b1b1f9972a84998476c65548d0bb, type: 2}
   - {fileID: 2100000, guid: cd7a092a77aba8b48b5bfa5be0e4aae7, type: 2}
@@ -262,3 +402,9 @@ MonoBehaviour:
   - {fileID: -8936004435426397053, guid: 73c16796f8ab0f147bd71edc53d2588f, type: 3}
   MinStickChangeAngle: 10
   MaxStickChangeAngle: 50
+  JumpSnd: {fileID: 3613478208687870043}
+--- !u!4 &1005404294128273599 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1472795445143119214, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+  m_PrefabInstance: {fileID: 1838456316930731473}
+  m_PrefabAsset: {fileID: 0}

@@ -116,7 +116,7 @@ public abstract class PlayerBase : MonoBehaviour
         
     }
 
-    public void Jump()
+    public virtual void Jump()
     {
         if (!IsGrounded())
             return;

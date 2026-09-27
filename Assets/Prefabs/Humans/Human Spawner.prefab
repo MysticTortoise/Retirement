@@ -48,8 +48,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c018f326d1149bda2811c1d5b2981ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HumanSpawner
-  RespawnTimeAtOneHuman: 3
-  TargetHumanCount: 7
+  RespawnTimeAtOneHuman: 5
+  TargetHumanCount: 5
   BoundsFactor: 0.92
   HumanPrefabs:
   - {fileID: 7398751621151307890, guid: 4b0320ea8e2de1242a9eaf33e7d5ac86, type: 3}

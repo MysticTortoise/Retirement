@@ -22,6 +22,7 @@ public class HumanSpawner : MonoBehaviour
     [SerializeField] private ContactFilter2D PlayerContactFilter;
 
     private float timer;
+    private bool waitingForSpawn;
 
     private void Start()
     {
@@ -45,7 +46,7 @@ public class HumanSpawner : MonoBehaviour
         if (!cols.Any(c => c && c.GetComponent<PlayerBase>()))
         {
             timer += (1/RespawnTimeAtOneHuman) * needToSpawn * Time.deltaTime;
-            if (timer >= 1)
+            if (timer >= 1 && !waitingForSpawn)
             {
                 SpawnHuman();
             }
@@ -59,6 +60,7 @@ public class HumanSpawner : MonoBehaviour
         human.transform.position = transform.position;
 
         humans.Add(humanComp);
+        waitingForSpawn = false;
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -66,6 +68,7 @@ public class HumanSpawner : MonoBehaviour
     {
         timer = 0;
         animator.SetTrigger(OpenID);
+        waitingForSpawn = true;
     }
 
     private GameObject PickRandomHumanPrefab()

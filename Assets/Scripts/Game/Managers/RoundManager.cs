@@ -3,6 +3,7 @@ using System;
 using System.Globalization;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public enum GameTeam
@@ -30,6 +31,16 @@ public class RoundManager : MonoBehaviour
 
     [NonSerialized] public bool roundStarted = false;
     [NonSerialized] public bool roundOver = false;
+
+    [SerializeField] private AudioSource RatScoreSound;
+    [SerializeField] private AudioSource MonsterScoreSound;
+    [SerializeField] private AudioSource RatWinSound;
+    [SerializeField] private AudioSource MonsterWinSound;
+
+    [SerializeField] private AudioSource MainMusic;
+    [SerializeField] private AudioSource TenseMusic;
+    
+    [SerializeField] private AudioSource TimerTickSnd;
     
     private void Start()
     {
@@ -63,9 +74,14 @@ public class RoundManager : MonoBehaviour
         {
             return;
         }
+
+        int lastInt = Mathf.CeilToInt(RoundTimeLeft);
         RoundTimeLeft -= Time.deltaTime;
         if (RoundTimeLeft <= 0)
         {
+            
+            MainMusic.volume = 0;
+            TenseMusic.volume = 0;
             if (!roundOver)
             {
                 EndRound();
@@ -76,6 +92,17 @@ public class RoundManager : MonoBehaviour
                 SceneManager.LoadScene("Menu");
             }
             return;
+        }
+        
+        if (RoundTimeLeft < 10)
+        {
+            MainMusic.volume = 0;
+            TenseMusic.volume = 0.2f;
+            
+            if (lastInt != Mathf.CeilToInt(RoundTimeLeft))
+            {
+                TimerTickSnd.Play();
+            }
         }
         
         UpdateRoundUI();
@@ -101,6 +128,14 @@ public class RoundManager : MonoBehaviour
             GameTeam.None => "DRAW!",
             _ => "ERROR IDK WHO WON"
         };
+
+        if (GetWinningTeam() == GameTeam.Demon)
+        {
+            MonsterWinSound.Play();
+        } else if (GetWinningTeam() == GameTeam.Rat)
+        {
+            RatWinSound.Play();
+        }
         
         TimeLeftText.gameObject.SetActive(false);
     }
@@ -112,10 +147,12 @@ public class RoundManager : MonoBehaviour
         if (team == GameTeam.Demon)
         {
             demonScore += amount;
+            MonsterScoreSound.Play();
         }
         else
         {
             ratScore += amount;
+            RatScoreSound.Play();
         }
     }
 }
