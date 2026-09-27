@@ -251,5 +251,14 @@ MonoBehaviour:
   JumpChargeTime: 0.6
   LaunchBubbles: 3
   spriteMaterial: {fileID: 2100000, guid: 4f0eb0ae1f866074883615b52b7ab776, type: 2}
+  StickSpriteMaterial: {fileID: 2100000, guid: 58d7c382d346142488d256dc756d9c14, type: 2}
   BallSprite: {fileID: 21300000, guid: 1cca8c0a9e4e83a4e9821ddac2bb8ff6, type: 3}
   ArrowSprite: {fileID: 21300000, guid: 17c6e5d68e8a41348bbc30672eeedf03, type: 3}
+  StickSprites:
+  - {fileID: -7045817880169053362, guid: 73c16796f8ab0f147bd71edc53d2588f, type: 3}
+  - {fileID: -5659994643454559614, guid: 73c16796f8ab0f147bd71edc53d2588f, type: 3}
+  - {fileID: -778394367613344618, guid: 73c16796f8ab0f147bd71edc53d2588f, type: 3}
+  - {fileID: -598241846280617359, guid: 73c16796f8ab0f147bd71edc53d2588f, type: 3}
+  - {fileID: -8936004435426397053, guid: 73c16796f8ab0f147bd71edc53d2588f, type: 3}
+  MinStickChangeAngle: 10
+  MaxStickChangeAngle: 50

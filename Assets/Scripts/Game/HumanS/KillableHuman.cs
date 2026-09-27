@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class KillableHuman : HumanBase
 {
     private static readonly int PanicID = Animator.StringToHash("Panic");
+    private static readonly int MeltAnimID = Animator.StringToHash("Melt");
     protected List<PlayerBase> attackedBy = new();
 
     [SerializeField] public float RatSoloKillTime;
@@ -18,6 +19,8 @@ public class KillableHuman : HumanBase
     private float killTimerSwayOffset;
 
     [SerializeField] private GameObject KillEffectPrefab;
+
+    private bool dying;
 
     protected override void Update()
     {
@@ -46,9 +49,16 @@ public class KillableHuman : HumanBase
     
     public void Kill()
     {
+        if (dying)
+        {
+            return;
+        }
         GameObject killFX = Instantiate(KillEffectPrefab);
         killFX.transform.position = transform.position;
-        Destroy(gameObject);
+        dying = true;
+        RBUtils.SetRBFreeze(rb, true);
+        Destroy(box);
+        animator.SetTrigger(MeltAnimID);
     }
 
     protected override void UpdateAnims()

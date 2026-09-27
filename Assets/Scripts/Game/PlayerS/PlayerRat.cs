@@ -1,5 +1,6 @@
 ﻿
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -11,6 +12,8 @@ using UnityEditor;
 public class PlayerRat : PlayerBase
 {
     private static readonly int AttachedID = Animator.StringToHash("Attached");
+    private static readonly int RemapFactorMID = Shader.PropertyToID("_RemapFactor");
+    private static readonly int DeadAnimID = Animator.StringToHash("Dead");
 
     [SerializeField] private float LaunchForce;
 
@@ -32,14 +35,24 @@ public class PlayerRat : PlayerBase
     [SerializeField] private float JumpChargeTime;
     private float jumpCharge;
 
+    [Header("Custom Renders")]
     [SerializeField] private int LaunchBubbles;
     [SerializeField] private Material spriteMaterial;
+    [SerializeField] private Material StickSpriteMaterial;
     [SerializeField] private Sprite BallSprite;
     [SerializeField] private Sprite ArrowSprite;
+
+    [SerializeField] private List<Sprite> StickSprites;
+    [SerializeField] private float MinStickChangeAngle;
+    [SerializeField] private float MaxStickChangeAngle;
     
     private RenderParams matRenderParms;
+    private RenderParams stickRenderParms;
     private SpriteParams ballSpriteParms;
     private SpriteParams arrowSpriteParms;
+
+    private MaterialPropertyBlock propBlock;
+    private SpriteRenderer sr;
     
     public override GameTeam GetTeam()
     {
@@ -71,8 +84,15 @@ public class PlayerRat : PlayerBase
         base.Start();
         
         matRenderParms = new RenderParams(spriteMaterial);
+        stickRenderParms = new RenderParams(StickSpriteMaterial);
         ballSpriteParms = new SpriteParams(BallSprite);
         arrowSpriteParms = new SpriteParams(ArrowSprite);
+
+        sr = GetComponent<SpriteRenderer>();
+        propBlock = new MaterialPropertyBlock();
+        sr.GetPropertyBlock(propBlock);
+        propBlock.SetFloat(RemapFactorMID, 1);
+        sr.SetPropertyBlock(propBlock);
     }
 
     public override void SetPlayerID(int id)
@@ -126,12 +146,35 @@ public class PlayerRat : PlayerBase
             {
                 ReleaseLatchHuman(latchedHuman);
             }
+            DrawStickIndicator();
         }
         else
         {
             latchBalance = 0;
             transform.rotation = Quaternion.identity;
         }
+    }
+
+    private void DrawStickIndicator()
+    {
+        int chosenFrame = 2;
+        if (latchBalance < -MaxStickChangeAngle)
+        {
+            chosenFrame = 0;
+        } else if (latchBalance < -MinStickChangeAngle)
+        {
+            chosenFrame = 1;
+        } else if (latchBalance > MaxStickChangeAngle)
+        {
+            chosenFrame = 4;
+        } else if (latchBalance > MinStickChangeAngle)
+        {
+            chosenFrame = 3;
+        }
+
+        var curSprite = new SpriteParams(StickSprites[chosenFrame]);
+        Matrix4x4 mat = Matrix4x4.Translate(transform.position + Vector3.up * 1);
+        Graphics.RenderSprite(stickRenderParms, curSprite, 0, mat);
     }
 
     private Vector3 GetBubblePos(float fac)
@@ -170,6 +213,12 @@ public class PlayerRat : PlayerBase
             return;
         CancelLaunch();
         deadTimer = RespawnTime;
+        
+        sr.GetPropertyBlock(propBlock);
+        propBlock.SetFloat(RemapFactorMID, 0);
+        sr.SetPropertyBlock(propBlock);
+        
+        animator.SetBool(DeadAnimID, true);
     }
 
     protected override bool CanInput()
@@ -181,6 +230,11 @@ public class PlayerRat : PlayerBase
     {
         transform.position = spawnPoint;
         RoundManager.instance.AddToScore(GetTeam(), -1);
+        
+        sr.GetPropertyBlock(propBlock);
+        propBlock.SetFloat(RemapFactorMID, 1);
+        sr.SetPropertyBlock(propBlock);
+        animator.SetBool(DeadAnimID, false);
     }
 
     protected override void UpdateAnims()

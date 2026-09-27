@@ -9,6 +9,8 @@
             _DstColorMap ("Dest Color Map", 2D) = "white" {}
             
             _DestYPalette ("Destination Palette Y", Float) = 0.0
+            
+            [Toggle] _RemapFactor ("Remap Factor", Float) = 1.0
         }
      
         SubShader
@@ -63,6 +65,8 @@
                 TEXTURE2D(_DstColorMap);
                 SAMPLER(sampler_DstColorMap);
                 half4 _DstColorMap_ST;
+                
+                float _RemapFactor;
      
                 Varyings UnlitVertex(Attributes v)
                 {
@@ -103,6 +107,8 @@
                     
                     half4 finalCol = newCol * i.color;
                     finalCol.a *= mainCol.a;
+                    
+                    finalCol = lerp(mainCol * i.color, finalCol, _RemapFactor);
      
                     return finalCol;
                 }
