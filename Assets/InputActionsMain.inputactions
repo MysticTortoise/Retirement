@@ -45,6 +45,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "ec1ba4f7-b9c1-48e5-be6b-e999f4ebf7f5",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -109,7 +119,7 @@
                     "path": "<Joystick>/stick",
                     "interactions": "",
                     "processors": "StickDeadzone",
-                    "groups": ";Controller",
+                    "groups": "Joystick",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -119,19 +129,8 @@
                     "id": "e0e190fb-2b16-4e42-8ac8-8ae4b6215e38",
                     "path": "<Gamepad>/leftStick",
                     "interactions": "",
-                    "processors": "",
-                    "groups": ";Controller",
-                    "action": "Move",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "cd4a9388-67b7-4b86-9c27-6d9fb3bab238",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
+                    "processors": "StickDeadzone",
+                    "groups": ";Gamepad",
                     "action": "Move",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -153,7 +152,7 @@
                     "path": "<Joystick>/trigger",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Controller",
+                    "groups": "Joystick",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -164,7 +163,7 @@
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Controller",
+                    "groups": ";Gamepad",
                     "action": "Jump",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -186,7 +185,7 @@
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Controller",
+                    "groups": ";Gamepad",
                     "action": "KILL",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -197,7 +196,7 @@
                     "path": "<HID::Nintendo Wireless Gamepad>/button3",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Controller",
+                    "groups": ";Joystick",
                     "action": "KILL",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -208,7 +207,7 @@
                     "path": "<HID::2DC8-6012>/button4",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Controller",
+                    "groups": "Joystick",
                     "action": "KILL",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -230,7 +229,7 @@
                     "path": "<HID::Nintendo Wireless Gamepad>/button2",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Joystick",
                     "action": "Leave",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -241,7 +240,7 @@
                     "path": "<HID::2DC8-6012>/button2",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Joystick",
                     "action": "Leave",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -252,8 +251,52 @@
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "Leave",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ffda8c5e-04fe-4a19-bdf1-c1fbc18fcdf6",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "259f6ddd-7444-4e0f-912c-b4a7ae27ad2f",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "88d84c39-7248-4688-a810-4f2b617fc5f4",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button10",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "17415243-7219-4a59-b3ae-e3440c638f4f",
+                    "path": "<HID::2DC8-6012>/button11",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Joystick",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -273,14 +316,20 @@
             ]
         },
         {
-            "name": "Controller",
-            "bindingGroup": "Controller",
+            "name": "Joystick",
+            "bindingGroup": "Joystick",
             "devices": [
                 {
                     "devicePath": "<Joystick>",
                     "isOptional": false,
                     "isOR": false
-                },
+                }
+            ]
+        },
+        {
+            "name": "Gamepad",
+            "bindingGroup": "Gamepad",
+            "devices": [
                 {
                     "devicePath": "<Gamepad>",
                     "isOptional": false,

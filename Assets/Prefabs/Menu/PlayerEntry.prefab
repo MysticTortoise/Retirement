@@ -118,8 +118,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: DEMON
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bd08ff02d3528cd4095c3f0423aa71c2, type: 2}
+  m_sharedMaterial: {fileID: -8489859375644227075, guid: bd08ff02d3528cd4095c3f0423aa71c2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -255,8 +255,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: NO PLAYER
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bd08ff02d3528cd4095c3f0423aa71c2, type: 2}
+  m_sharedMaterial: {fileID: -8489859375644227075, guid: bd08ff02d3528cd4095c3f0423aa71c2, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

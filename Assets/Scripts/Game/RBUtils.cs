@@ -5,7 +5,7 @@ public class RBUtils
 {
     public static float GetDecelSpeed(Rigidbody2D rb, float decelAmount)
     {
-        float decelMin = Mathf.Min(Mathf.Abs(rb.linearVelocityX), decelAmount * Time.deltaTime);
+        float decelMin = Mathf.Min(Mathf.Abs(rb.linearVelocityX) * rb.mass / Time.fixedDeltaTime, decelAmount * Time.deltaTime);
         float decelSign = -Mathf.Sign(rb.linearVelocityX);
         return decelMin * decelSign;
     }

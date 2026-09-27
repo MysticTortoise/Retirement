@@ -118,11 +118,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 2020b1b1f9972a84998476c65548d0bb, type: 2}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_DefaultControlScheme
-      value: Controller
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionId
@@ -139,6 +139,10 @@ PrefabInstance:
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[3].m_ActionName
       value: 'BaseGame/Leave[/Keyboard/q,/Nintendo Wireless Gamepad/button2,/2DC8-6012/button2,/DualSenseGamepadHID/buttonEast]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionName
+      value: 'BaseGame/Start[/Keyboard/enter,/DualSenseGamepadHID/start,/Nintendo Wireless Gamepad/button10,/2DC8-6012/button11,/2DC8-6013/button11]'
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size

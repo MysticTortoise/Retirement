@@ -6,42 +6,43 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Users;
+using UnityEngine.SceneManagement;
 
 public class PlayerJoinManager : MonoBehaviour
 {
     [SerializeField] private List<PlayerJoinBox> PlayerUIBoxes = new();
 
-    private static InputUser[] inputUsers = new InputUser[4];
+    public static InputDevice[] inputUsers = new InputDevice[4];
+
+    [SerializeField] private InputActionReference StartAction;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         #if UNITY_EDITOR
-        inputUsers = new InputUser[4];
+        inputUsers = new InputDevice[4];
         #endif
 
         for(int i = 0; i < inputUsers.Length; i++)
         {
             PlayerUIBoxes[i].UpdateUser(inputUsers[i]);
         }
+        StartAction.action.Enable();
     }
 
     // Update is called once per frame
     void Update()
     {
-        foreach (InputUser user in inputUsers.Where(u => u.valid).ToArray())
+        foreach (InputDevice device in inputUsers.Where(u => u != null).ToArray())
         {
-            foreach (InputDevice device in user.pairedDevices.ToArray())
-            {
                 switch (device)
                 {
                     case Gamepad gamepad when gamepad.buttonEast.wasPressedThisFrame:
                     case Joystick joystick when joystick.allControls[2].IsPressed():
                     case Keyboard keyboard when keyboard.qKey.wasPressedThisFrame:
-                        RemovePlayer(user);
+                        RemovePlayer(device);
                         return;
                 }
-            }
         }
         
         foreach (InputDevice inputDevice in InputSystem.devices.Where(inputDevice => !IsDeviceAssignedToUser(inputDevice)))
@@ -55,6 +56,11 @@ public class PlayerJoinManager : MonoBehaviour
                     break;
             }
         }
+
+        if (StartAction.action.IsPressed())
+        {
+            SceneManager.LoadScene("Game");
+        }
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -62,32 +68,30 @@ public class PlayerJoinManager : MonoBehaviour
     {
         for (int i = 0; i < inputUsers.Length; i++)
         {
-            if (!inputUsers[i].valid)
+            if (inputUsers[i] == null)
             {
-                InputUser user = InputUser.PerformPairingWithDevice(device);
-                inputUsers[i] = user;
-                PlayerUIBoxes[i].UpdateUser(user);
+                inputUsers[i] = device;
+                PlayerUIBoxes[i].UpdateUser(device);
                 return;
             }
         }
         Debug.Log("TOO MANY");
     }
 
-    private void RemovePlayer(InputUser user)
+    private void RemovePlayer(InputDevice device)
     {
-        if (!inputUsers.Contains(user))
+        if (!inputUsers.Contains(device))
             return;
 
-        int pID = Array.IndexOf(inputUsers, user);
+        int pID = Array.IndexOf(inputUsers, device);
 
         inputUsers.SetValue(null, pID);
-        user.UnpairDevicesAndRemoveUser();
-        PlayerUIBoxes[pID].UpdateUser(user);
+        PlayerUIBoxes[pID].UpdateUser(null);
     }
 
     private bool IsDeviceAssignedToUser(InputDevice device)
     {
-        return inputUsers.Any(u => u.valid && u.pairedDevices.Contains(device));
+        return inputUsers.Contains(device);
     }
     
 }

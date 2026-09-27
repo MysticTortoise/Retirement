@@ -8,8 +8,6 @@ using UnityEngine.InputSystem.Users;
 
 public class MultiPlayerManager : MonoBehaviour
 {
-    private InputDevice[] playerControllers;
-
     private PlayerInputManager playerInputManager;
 
     [SerializeField] private GameObject MonsterPrefab;
@@ -25,37 +23,30 @@ public class MultiPlayerManager : MonoBehaviour
 
     private void SpawnPlayers()
     {
-        if (playerControllers == null)
-        {
-            playerControllers = InputSystem.devices
-                .Where(d => d is Keyboard or Joystick or Gamepad)
-                .ToArray();
-            
-        }
 
         var spawns = FindObjectsByType<PlayerSpawn>();
         PlayerSpawn monsterSpawn = spawns.First(s => s.IsMonster);
         PlayerInput monster = PlayerInput.Instantiate(
             MonsterPrefab,
-            pairWithDevice: playerControllers[0]
+            pairWithDevice: PlayerJoinManager.inputUsers[0],
+            playerIndex: 0
         );
         monster.transform.position = monsterSpawn.transform.position;
 
-        var ratSpawns = spawns.Where(s => !s.IsMonster);
-        int pCount = 1;
-        foreach (PlayerSpawn ratSpawn in ratSpawns)
-        {
-             PlayerInput rat = PlayerInput.Instantiate(
-                RatPrefab,
-                pairWithDevice: playerControllers[pCount]
-            );
-            rat.transform.position = ratSpawn.transform.position;
-            pCount++;
+        var ratSpawns = spawns.Where(s => !s.IsMonster).ToArray();
 
-            if (pCount >= playerControllers.Length)
-            {
-                break;
-            }
+        for (int i = 1; i < PlayerJoinManager.inputUsers.Length; i++)
+        {
+            if (PlayerJoinManager.inputUsers[i] == null)
+                continue;
+            
+            PlayerInput rat = PlayerInput.Instantiate(
+                RatPrefab,
+                pairWithDevice: PlayerJoinManager.inputUsers[i],
+                playerIndex: i
+            );
+            PlayerSpawn spawn = ratSpawns[i - 1];
+            rat.transform.position = spawn.transform.position;
         }
     }
 }
