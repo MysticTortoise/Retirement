@@ -44,7 +44,7 @@ public class PlayerRat : PlayerBase
     {
         base.Update();
         
-        if (launchTimer > 0.3f && IsGrounded())
+        if (launchTimer > Time.fixedDeltaTime * 3 && IsGrounded())
         {
             launchTimer = 0;
         } else if (launchTimer > 0)

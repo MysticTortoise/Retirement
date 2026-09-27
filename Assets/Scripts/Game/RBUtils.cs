@@ -3,11 +3,22 @@ using UnityEngine;
 
 public class RBUtils
 {
-    public static float GetDecelSpeed(Rigidbody2D rb, float decelAmount)
+
+    public static void XDecelRB(Rigidbody2D rb, float decelAmount)
     {
-        float decelMin = Mathf.Min(Mathf.Abs(rb.linearVelocityX) * rb.mass / Time.fixedDeltaTime, decelAmount * Time.deltaTime);
+        float forceToStop = Mathf.Abs(rb.linearVelocityX) * rb.mass / Time.fixedDeltaTime;
+
+        float attemptDecelForce = decelAmount * Time.deltaTime;
         float decelSign = -Mathf.Sign(rb.linearVelocityX);
-        return decelMin * decelSign;
+        float decelForce = attemptDecelForce * decelSign;
+
+        if (forceToStop <= attemptDecelForce)
+        {
+            rb.linearVelocityX = 0;
+        } else
+        {
+            rb.AddForceX(decelForce);
+        }
     }
 
     public static void LimitXSpeed(Rigidbody2D rb, float maxSpeed)

@@ -67,16 +67,16 @@ public abstract class PlayerBase : MonoBehaviour
         UpdateAnims();
     }
 
-    private static readonly float minTurnAmnt = 2f;
+    private static readonly float minTurnAmnt = 0.05f;
     
     protected virtual void UpdateAnims()
     {
         animator.SetBool(MovingID, Mathf.Abs(rb.linearVelocityX)  > 0.1f);
         animator.SetBool(AirborneID, !IsGrounded());
-        if (rb.linearVelocityX > minTurnAmnt)
+        if (moveInput.x > minTurnAmnt)
         {
             animator.SetBool(RightID, true);
-        } else if (rb.linearVelocityX < -minTurnAmnt)
+        } else if (moveInput.x < -minTurnAmnt)
         {
             animator.SetBool(RightID, false);
         }
@@ -86,7 +86,7 @@ public abstract class PlayerBase : MonoBehaviour
     {
         if (Mathf.Abs(moveInput.x) <= 0.05)
         {
-            rb.AddForceX(RBUtils.GetDecelSpeed(rb, GetDeceleration()));
+            RBUtils.XDecelRB(rb, GetDeceleration());
         }
         else
         {

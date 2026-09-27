@@ -74,7 +74,7 @@ public class HumanBase : MonoBehaviour
 
     protected virtual void IdleTick()
     {
-        rb.AddForceX(RBUtils.GetDecelSpeed(rb, GetDeceleration()));
+        RBUtils.XDecelRB(rb, GetDeceleration());
 
         targetX -= Time.deltaTime;
         if (targetX <= 0)

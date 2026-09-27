@@ -64,6 +64,12 @@ public class HumanSpawner : MonoBehaviour
         humans.Add(humanComp);
     }
 
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(transform.position, 0.1f);
+    }
+
     private void OnDrawGizmosSelected()
     {
         RaycastHit2D leftHit = Physics2D.Raycast(transform.position, Vector2.left, 999f, HumanColMask);

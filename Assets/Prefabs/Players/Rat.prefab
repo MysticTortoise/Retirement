@@ -58,11 +58,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_Size.x
-      value: 0.72
+      value: 0.96
       objectReference: {fileID: 0}
     - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_Size.y
-      value: 0.36
+      value: 0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_SpriteTilingProperty.newSize.x
@@ -74,11 +78,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.0666667
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.53333336
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5857295864523707217, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_Size.x

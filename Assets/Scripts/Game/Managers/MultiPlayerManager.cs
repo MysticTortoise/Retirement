@@ -17,6 +17,14 @@ public class MultiPlayerManager : MonoBehaviour
     
     private void Start()
     {
+        if (PlayerJoinManager.inputUsers[0] == null)
+        {
+            var list = InputSystem.devices.Where(d => d is Gamepad or Keyboard or Joystick).ToArray();
+            for (int i = 0; i < Mathf.Min(PlayerJoinManager.inputUsers.Length, list.Length); i++)
+            {
+                PlayerJoinManager.inputUsers[i] = list[i];
+            }
+        }
         playerInputManager = GetComponent<PlayerInputManager>();
         SpawnPlayers();
     }
