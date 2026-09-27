@@ -137,6 +137,10 @@ PrefabInstance:
       value: fdfb60d5-9a17-4062-a75e-c70b63a93150
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[4].m_ActionId
+      value: ec1ba4f7-b9c1-48e5-be6b-e999f4ebf7f5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionName
       value: 'BaseGame/KILL[/Keyboard/e]'
       objectReference: {fileID: 0}
@@ -146,7 +150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[4].m_ActionName
-      value: 'BaseGame/Start[/Keyboard/enter,/DualSenseGamepadHID/start,/Nintendo Wireless Gamepad/button10,/2DC8-6012/button11,/2DC8-6013/button11]'
+      value: 'BaseGame/Start[/Keyboard/enter,/DualSenseGamepadHID/start,/Nintendo Wireless Gamepad/button10]'
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
@@ -243,3 +247,4 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 2020b1b1f9972a84998476c65548d0bb, type: 2}
   - {fileID: 2100000, guid: cd7a092a77aba8b48b5bfa5be0e4aae7, type: 2}
   - {fileID: 2100000, guid: 1b73d9b3f067bba4bb3d62c9134fabc9, type: 2}
+  RespawnTime: 4

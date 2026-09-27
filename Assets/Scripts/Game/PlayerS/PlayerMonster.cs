@@ -259,7 +259,7 @@ public class PlayerMonster : PlayerBase
 
     private void OnDrawGizmosSelected()
     {
-        /*Gizmos.color = Color.green;
+        Gizmos.color = Color.green;
         Gizmos.DrawRay(transform.position, Vector3.up * MaxTendrilNearCeilingDepth);
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position + (Vector3.up * MaxTendrilNearCeilingDepth),
@@ -269,23 +269,6 @@ public class PlayerMonster : PlayerBase
         Gizmos.DrawRay(transform.position, Vector3.down * MaxTendrilNearCeilingDepth);
         Gizmos.color = Color.blue;
         Gizmos.DrawRay(transform.position + (Vector3.down * MaxTendrilNearCeilingDepth),
-            Vector3.down * MaxTendrilPenetration);*/
-
-        Gizmos.color = Color.magenta;
-        
-        // Down Tendril
-        RaycastHit2D floorResult =
-            Physics2D.Raycast(transform.position, Vector3.down, MaxTendrilNearCeilingDepth, TendrilCastMask);
-        Gizmos.DrawLine(transform.position + Vector3.right, floorResult.point);
-
-        float floorDist = floorResult.distance;
-        
-        Gizmos.color = Color.yellow;
-
-        RaycastHit2D penetrateTestD =
-            Physics2D.Raycast(
-                transform.position + Vector3.down * (floorDist + MaxTendrilPenetration + 0.01f),
-                Vector3.up, MaxTendrilPenetration * 2, TendrilCastMask);
-        Gizmos.DrawLine(transform.position + Vector3.down * (floorDist + MaxTendrilPenetration + 0.01f), penetrateTestD.point);
+            Vector3.down * MaxTendrilPenetration);
     }
 }

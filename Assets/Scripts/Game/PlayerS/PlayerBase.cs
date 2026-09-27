@@ -26,6 +26,9 @@ public abstract class PlayerBase : MonoBehaviour
     protected BoxCollider2D box;
     
     protected Vector2 moveInput;
+    protected Vector3 spawnPoint;
+
+    protected PlayerInput playerInput;
     
     protected Animator animator;
 
@@ -58,6 +61,9 @@ public abstract class PlayerBase : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
 
         animator = GetComponent<Animator>();
+        playerInput = GetComponent<PlayerInput>();
+
+        spawnPoint = transform.position;
     }
 
     // Update is called once per frame

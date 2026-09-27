@@ -21,6 +21,9 @@ public class PlayerRat : PlayerBase
     [SerializeField] private float LatchInfluenceSpeed;
     
     [SerializeField] private Material[] RatMats;
+
+    [SerializeField] private float RespawnTime;
+    private float deadTimer;
     
     public override GameTeam GetTeam()
     {
@@ -57,6 +60,15 @@ public class PlayerRat : PlayerBase
     protected override void Update()
     {
         base.Update();
+
+        if (deadTimer > 0)
+        {
+            deadTimer -= Time.deltaTime;
+            if (deadTimer <= 0)
+            {
+                RatRespawn();
+            }
+        }
         
         if (launchTimer > Time.fixedDeltaTime * 3 && IsGrounded())
         {
@@ -87,6 +99,19 @@ public class PlayerRat : PlayerBase
             latchBalance = 0;
             transform.rotation = Quaternion.identity;
         }
+    }
+
+    public void RatKill()
+    {
+        deadTimer = RespawnTime;
+        playerInput.actions.Disable();
+    }
+
+    private void RatRespawn()
+    {
+        transform.position = spawnPoint;
+        playerInput.actions.Enable();
+        RoundManager.instance.AddToScore(GetTeam(), -1);
     }
 
     protected override void UpdateAnims()

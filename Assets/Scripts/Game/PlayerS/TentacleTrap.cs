@@ -127,6 +127,14 @@ public class TentacleTrap : MonoBehaviour
                 Disappear();
                 return;
             }
+
+            var rat = arr[i].GetComponent<PlayerRat>();
+            if (rat)
+            {
+                rat.RatKill();
+                Disappear();
+                return;
+            }
         }
     }
 
