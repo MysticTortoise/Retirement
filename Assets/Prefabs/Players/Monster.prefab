@@ -640,7 +640,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   CrawlspaceSpeed: 7
-  ConsumeTime: 1.7
+  ConsumeTime: 2
   TendrilTrapPrefab: {fileID: 2421275295058228048, guid: 2453ea2fc0c562a42ac19988b3582033, type: 3}
   MaxTendrilNearCeilingDepth: 1.8
   MaxTendrilPenetration: 1.26

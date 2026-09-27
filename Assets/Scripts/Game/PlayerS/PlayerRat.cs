@@ -55,6 +55,9 @@ public class PlayerRat : PlayerBase
     private SpriteRenderer sr;
 
     [SerializeField] private AudioSource JumpSnd;
+    [SerializeField] private AudioSource BiteSnd;
+
+    [SerializeField] private int DeathPenalty;
     
     public override GameTeam GetTeam()
     {
@@ -240,7 +243,7 @@ public class PlayerRat : PlayerBase
     private void RatRespawn()
     {
         transform.position = spawnPoint;
-        RoundManager.instance.AddToScore(GetTeam(), -1);
+        RoundManager.instance.AddToScore(GetTeam(), -DeathPenalty);
         
         sr.GetPropertyBlock(propBlock);
         propBlock.SetFloat(RemapFactorMID, 1);
@@ -294,12 +297,15 @@ public class PlayerRat : PlayerBase
 
         latchedHuman = human;
         RBUtils.SetRBFreeze(rb, true);
+        box.enabled = false;
+        BiteSnd.Play();
         launchTimer = 0;
     }
 
     public void ReleaseLatchHuman(KillableHuman human)
     {
         RBUtils.SetRBFreeze(rb, false);
+        box.enabled = true;
         human.DetachAttacking(this);
         latchedHuman = null;
         launchTimer = 0;
