@@ -236,6 +236,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   LaunchForce: 25
-  LatchForceConversion: 50
-  LatchMaxAngle: 45
+  LatchForceConversion: 60
+  LatchMaxAngle: 55
   LatchInfluenceSpeed: 150
+  RatMats:
+  - {fileID: 2100000, guid: 2020b1b1f9972a84998476c65548d0bb, type: 2}
+  - {fileID: 2100000, guid: cd7a092a77aba8b48b5bfa5be0e4aae7, type: 2}
+  - {fileID: 2100000, guid: 1b73d9b3f067bba4bb3d62c9134fabc9, type: 2}

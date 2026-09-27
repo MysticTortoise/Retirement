@@ -34,6 +34,7 @@ public class RoundManager : MonoBehaviour
     private void Start()
     {
         instance = this;
+        StartRound();
     }
 
     void StartRound()

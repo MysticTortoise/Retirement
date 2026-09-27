@@ -13,6 +13,8 @@ public enum HumanState
 
 public class HumanBase : MonoBehaviour
 {
+    private static readonly int MovingID = Animator.StringToHash("Moving");
+    private static readonly int RightAnimID = Animator.StringToHash("Right");
     [SerializeField] protected float MoveSpeed;
     [SerializeField] protected float Acceleration;
     [SerializeField] protected float Deceleration;
@@ -29,6 +31,7 @@ public class HumanBase : MonoBehaviour
     private HumanState state;
 
     [NonSerialized] public Rigidbody2D rb;
+    protected Animator animator;
     protected BoxCollider2D box;
 
 
@@ -52,7 +55,8 @@ public class HumanBase : MonoBehaviour
         
         rb = GetComponent<Rigidbody2D>();
         box = GetComponent<BoxCollider2D>();
-        BeginIdleWalk();
+        animator = GetComponent<Animator>();
+        GoIdle();
     }
 
     protected virtual void Update()
@@ -70,6 +74,19 @@ public class HumanBase : MonoBehaviour
         }
 
         RBUtils.LimitXSpeed(rb, GetMaxSpeed());
+        UpdateAnims();
+    }
+    
+    protected virtual void UpdateAnims()
+    {
+        animator.SetBool(MovingID, state != HumanState.Idle);
+        if (rb.linearVelocityX > 0.1f)
+        {
+            animator.SetBool(RightAnimID, true);
+        } else if (rb.linearVelocityX < -0.1f)
+        {
+            animator.SetBool(RightAnimID, false);
+        }
     }
 
     protected virtual void IdleTick()

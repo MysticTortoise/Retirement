@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,6 +9,12 @@ public class PlayerMonster : PlayerBase
     [SerializeField] protected float CrawlspaceSpeed;
     [SerializeField] protected float ConsumeTime;
 
+    [SerializeField] private GameObject TendrilTrapPrefab;
+    [SerializeField] private float MaxTendrilNearCeilingDepth;
+    [SerializeField] private float MaxTendrilPenetration;
+    [SerializeField] private LayerMask TendrilCastMask;
+    [SerializeField] private float TendrilCooldown;
+
     private float humanConsumeTimer;
     private HumanBase currentConsumingHuman;
 
@@ -14,6 +22,11 @@ public class PlayerMonster : PlayerBase
     private SpriteRenderer gloobSprite;
     private BoxCollider2D bigBox;
     private SpriteRenderer bigSprite;
+
+    [SerializeField] private GameObject TendrilVisualizerPrefab;
+    private GameObject tendrilVisualizer;
+    private List<TentacleTrap> traps = new(2);
+    private float trapCooldown;
 
     public override GameTeam GetTeam()
     {
@@ -34,17 +47,40 @@ public class PlayerMonster : PlayerBase
         bigSprite = transform.Find("BigSprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         
+        tendrilVisualizer = Instantiate(TendrilVisualizerPrefab);
+        var trapComp = tendrilVisualizer.GetComponent<TentacleTrap>();
+        trapComp.owner = this;
+        trapComp.visualOnly = true;
+
         UpdateFormStatus();
     }
 
     protected override void Update()
     {
         UpdateFormStatus();
-        
+
         base.Update();
 
         if (IsConsumingHuman())
             ConsumeHumanTick();
+
+        var tendrilTransform = GetTendrilTransform();
+        if (tendrilTransform != null && !IsTrapOnCooldown())
+        {
+            tendrilVisualizer.transform.position = (Vector3)(tendrilTransform?.pos);
+            tendrilVisualizer.transform.rotation = (Quaternion)tendrilTransform?.rot;
+        }
+        else
+        {
+            tendrilVisualizer.transform.position = Vector3.up * 99999f;
+        }
+
+        if (IsTrapOnCooldown())
+        {
+            trapCooldown -= Time.deltaTime;
+        }
+        
+        
     }
 
     private void UpdateFormStatus()
@@ -72,13 +108,124 @@ public class PlayerMonster : PlayerBase
         return humanConsumeTimer > 0;
     }
 
+    public bool IsTrapOnCooldown()
+    {
+        return trapCooldown > 0;
+    }
+
+    private (Vector2 pos, Quaternion rot)? GetTendrilTransform()
+    {
+        if (!IsGrounded() || moveInput.y > 0.6f)
+        {
+            // up tendril
+            RaycastHit2D ceilingResult =
+                Physics2D.Raycast(transform.position, Vector3.up, MaxTendrilNearCeilingDepth, TendrilCastMask);
+            if (!ceilingResult.collider)
+            {
+                return null;
+            }
+
+            float ceilDist = ceilingResult.distance;
+
+            RaycastHit2D penetrateTest =
+                Physics2D.Raycast(
+                    transform.position + Vector3.up * (ceilDist + MaxTendrilPenetration + 0.1f),
+                    Vector3.down, MaxTendrilPenetration * 2, TendrilCastMask);
+
+            if (penetrateTest.point.y <= ceilingResult.point.y + 0.01f)
+            {
+                return null;
+            }
+
+            Vector2 pos = penetrateTest.point;
+            Quaternion quat;
+            if (pos.y < transform.position.y)
+            {
+                quat = Quaternion.Euler(0, 0, 180);
+            }
+            else
+            {
+                quat = Quaternion.identity;
+            }
+
+            return (pos, quat);
+        }
+
+        // Down Tendril
+        RaycastHit2D floorResult =
+            Physics2D.Raycast(transform.position, Vector3.down, MaxTendrilNearCeilingDepth, TendrilCastMask);
+        if (!floorResult.collider)
+        {
+            return null;
+        }
+
+        float floorDist = floorResult.distance;
+
+        RaycastHit2D penetrateTestD =
+            Physics2D.Raycast(
+                transform.position + Vector3.down * (floorDist + MaxTendrilPenetration + 0.01f),
+                Vector3.up, MaxTendrilPenetration * 2, TendrilCastMask);
+
+        if (penetrateTestD.point.y >= floorResult.point.y - 0.01f)
+        {
+            return null;
+        }
+
+        Vector2 posD = penetrateTestD.point;
+        Quaternion quatD;
+        if (posD.y < transform.position.y)
+        {
+            quatD = Quaternion.Euler(0, 0, 180);
+        }
+        else
+        {
+            quatD = Quaternion.identity;
+        }
+
+        return (posD, quatD);
+    }
+
+    private void TrySpawnTendrilTrap()
+    {
+        if (IsTrapOnCooldown())
+            return;
+        
+        traps.RemoveAll(t => !t);
+        while (traps.Count >= 2)
+        {
+            TentacleTrap trap = traps[0];
+            trap.Disappear();
+            traps.RemoveAt(0);
+        }
+        
+        var tendrilTransform = GetTendrilTransform();
+        if (tendrilTransform == null)
+            return;
+
+        GameObject tendrilObj = Instantiate(TendrilTrapPrefab);
+        tendrilObj.transform.position = (Vector3)tendrilTransform?.pos;
+        tendrilObj.transform.rotation = (Quaternion)tendrilTransform?.rot;
+
+        var trapComp = tendrilObj.GetComponent<TentacleTrap>();
+        trapComp.owner = this;
+        traps.Add(trapComp);
+        trapCooldown = TendrilCooldown;
+    }
+
     public void InputTryLatch(InputAction.CallbackContext context)
     {
         if (!context.started)
             return;
-        KillableHuman human = CheckForOverlappingHuman();
-        if (human)
-            LatchOntoHumanBlob(human);
+        if (IsInCrawlspace())
+        {
+            TrySpawnTendrilTrap();
+        }
+        else
+        {
+            KillableHuman human = CheckForOverlappingHuman();
+            if (human)
+                LatchOntoHumanBlob(human);
+        }
     }
 
     protected void LatchOntoHumanBlob(KillableHuman human)
@@ -88,7 +235,7 @@ public class PlayerMonster : PlayerBase
         if (!human.TryBeginAttacking(this))
             return;
         transform.position = human.transform.position;
-        RBUtils.SetRBFreeze(rb,true);
+        RBUtils.SetRBFreeze(rb, true);
         humanConsumeTimer = float.Epsilon;
         currentConsumingHuman = human;
     }
@@ -106,7 +253,39 @@ public class PlayerMonster : PlayerBase
     {
         humanConsumeTimer = 0;
         KillHuman(currentConsumingHuman);
-        RBUtils.SetRBFreeze(rb,false);
+        RBUtils.SetRBFreeze(rb, false);
         currentConsumingHuman = null;
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        /*Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, Vector3.up * MaxTendrilNearCeilingDepth);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position + (Vector3.up * MaxTendrilNearCeilingDepth),
+            Vector3.up * MaxTendrilPenetration);
+        
+        Gizmos.color = Color.green;
+        Gizmos.DrawRay(transform.position, Vector3.down * MaxTendrilNearCeilingDepth);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawRay(transform.position + (Vector3.down * MaxTendrilNearCeilingDepth),
+            Vector3.down * MaxTendrilPenetration);*/
+
+        Gizmos.color = Color.magenta;
+        
+        // Down Tendril
+        RaycastHit2D floorResult =
+            Physics2D.Raycast(transform.position, Vector3.down, MaxTendrilNearCeilingDepth, TendrilCastMask);
+        Gizmos.DrawLine(transform.position + Vector3.right, floorResult.point);
+
+        float floorDist = floorResult.distance;
+        
+        Gizmos.color = Color.yellow;
+
+        RaycastHit2D penetrateTestD =
+            Physics2D.Raycast(
+                transform.position + Vector3.down * (floorDist + MaxTendrilPenetration + 0.01f),
+                Vector3.up, MaxTendrilPenetration * 2, TendrilCastMask);
+        Gizmos.DrawLine(transform.position + Vector3.down * (floorDist + MaxTendrilPenetration + 0.01f), penetrateTestD.point);
     }
 }

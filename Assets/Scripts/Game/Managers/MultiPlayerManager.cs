@@ -12,7 +12,7 @@ public class MultiPlayerManager : MonoBehaviour
 
     [SerializeField] private GameObject MonsterPrefab;
     [SerializeField] private GameObject RatPrefab;
-
+    
     
     
     private void Start()
@@ -40,6 +40,7 @@ public class MultiPlayerManager : MonoBehaviour
             playerIndex: 0
         );
         monster.transform.position = monsterSpawn.transform.position;
+        monster.GetComponent<PlayerBase>().SetPlayerID(0);
 
         var ratSpawns = spawns.Where(s => !s.IsMonster).ToArray();
 
@@ -55,6 +56,7 @@ public class MultiPlayerManager : MonoBehaviour
             );
             PlayerSpawn spawn = ratSpawns[i - 1];
             rat.transform.position = spawn.transform.position;
+            rat.GetComponent<PlayerBase>().SetPlayerID(i);
         }
     }
 }

@@ -20,6 +20,8 @@ public class PlayerRat : PlayerBase
     [SerializeField] private float LatchMaxAngle;
     [SerializeField] private float LatchInfluenceSpeed;
     
+    [SerializeField] private Material[] RatMats;
+    
     public override GameTeam GetTeam()
     {
         return GameTeam.Rat;
@@ -38,6 +40,18 @@ public class PlayerRat : PlayerBase
     protected override float GetMaxSpeed()
     {
         return isLaunching ? float.MaxValue : base.GetMaxSpeed();
+    }
+
+    protected override void Start()
+    {
+        base.Start();
+        
+    }
+
+    public override void SetPlayerID(int id)
+    {
+        base.SetPlayerID(id);
+        GetComponent<SpriteRenderer>().material = RatMats[id - 1];
     }
 
     protected override void Update()

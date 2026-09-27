@@ -98,6 +98,11 @@ public abstract class PlayerBase : MonoBehaviour
         cachedCrawlspace = 0;
     }
 
+    public virtual void SetPlayerID(int id)
+    {
+        
+    }
+
     public void Jump()
     {
         if (!IsGrounded())
@@ -127,18 +132,22 @@ public abstract class PlayerBase : MonoBehaviour
         return cachedCrawlspace == 2;
     }
 
-    public bool IsGrounded()
+    protected virtual ContactFilter2D GetColMask()
     {
-        Vector2 center = (Vector2)box.bounds.center - new Vector2(0, box.bounds.extents.y);
-        var size = new Vector2(box.bounds.size.x * 0.95f, 0.1f);
-        ContactFilter2D contactFilter2D = new()
+        return new ContactFilter2D
         {
             layerMask = PlayerColMask,
             useLayerMask = true,
             useTriggers = false
         };
+    }
+
+    public bool IsGrounded()
+    {
+        Vector2 center = (Vector2)box.bounds.center - new Vector2(0, box.bounds.extents.y);
+        var size = new Vector2(box.bounds.size.x * 0.95f, 0.1f);
         var cols = new Collider2D[2];
-        Physics2D.OverlapBox(center, size, 0, contactFilter2D, cols);
+        Physics2D.OverlapBox(center, size, 0, GetColMask(), cols);
         return cols.Count(c => c && c != box) > 0;
     }
     

@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class KillableHuman : HumanBase
 {
+    private static readonly int PanicID = Animator.StringToHash("Panic");
     protected List<PlayerBase> attackedBy = new();
 
     [SerializeField] public float RatSoloKillTime;
@@ -39,6 +40,12 @@ public class KillableHuman : HumanBase
             
             rb.AddForceX(Mathf.Sin((humanKillTimer + killTimerSwayOffset) * 10) * SwayForce * Time.deltaTime);
         }
+    }
+
+    protected override void UpdateAnims()
+    {
+        base.UpdateAnims();
+        animator.SetBool(PanicID, attackedBy.Any(p => p.GetTeam() == GameTeam.Rat));
     }
 
     private void BeginAttacking()
