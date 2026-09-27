@@ -48,7 +48,9 @@ MonoBehaviour:
   RespawnTimeAtOneHuman: 3
   TargetHumanCount: 7
   BoundsFactor: 0.92
-  HumanPrefab: {fileID: 7398751621151307890, guid: 4b0320ea8e2de1242a9eaf33e7d5ac86, type: 3}
+  HumanPrefabs:
+  - {fileID: 7398751621151307890, guid: 4b0320ea8e2de1242a9eaf33e7d5ac86, type: 3}
+  - {fileID: 3035510005803298751, guid: 932a9c2218b39c74287ee1e21b37a80f, type: 3}
   HumanColMask:
     serializedVersion: 2
     m_Bits: 576

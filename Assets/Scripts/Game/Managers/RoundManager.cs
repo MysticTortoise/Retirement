@@ -34,7 +34,7 @@ public class RoundManager : MonoBehaviour
     private void Start()
     {
         instance = this;
-        StartRound();
+        UpdateRoundUI();
     }
 
     void StartRound()
@@ -78,10 +78,10 @@ public class RoundManager : MonoBehaviour
             return;
         }
         
-        RoundTick();
+        UpdateRoundUI();
     }
 
-    private void RoundTick()
+    private void UpdateRoundUI()
     {
         DemonScoreText.text = demonScore.ToString();
         RatScoreText.text = ratScore.ToString();

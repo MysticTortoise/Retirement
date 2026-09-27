@@ -112,7 +112,10 @@ public class PlayerRat : PlayerBase
         {
             transform.position = latchedHuman.transform.position;
             latchBalance -= latchedHuman.rb.linearVelocityX * LatchForceConversion * Time.deltaTime;
-            latchBalance -= moveInput.x * LatchInfluenceSpeed * Time.deltaTime;
+            if (CanInput())
+            {
+                latchBalance -= moveInput.x * LatchInfluenceSpeed * Time.deltaTime;
+            }
             
             transform.rotation = Quaternion.Euler(0, 0, latchBalance);
 
@@ -162,14 +165,18 @@ public class PlayerRat : PlayerBase
     {
         if (IsDead())
             return;
+        CancelLaunch();
         deadTimer = RespawnTime;
-        playerInput.actions.Disable();
+    }
+
+    protected override bool CanInput()
+    {
+        return base.CanInput() && !IsDead();
     }
 
     private void RatRespawn()
     {
         transform.position = spawnPoint;
-        playerInput.actions.Enable();
         RoundManager.instance.AddToScore(GetTeam(), -1);
     }
 
@@ -189,6 +196,12 @@ public class PlayerRat : PlayerBase
         RBUtils.SetRBFreeze(rb, true);
         preppingLaunch = true;
         jumpCharge = 0;
+    }
+
+    private void CancelLaunch()
+    {
+        preppingLaunch = false;
+        RBUtils.SetRBFreeze(rb, false);
     }
 
     private void Launch()
@@ -226,6 +239,8 @@ public class PlayerRat : PlayerBase
 
     public void InputAttack(InputAction.CallbackContext ctx)
     {
+        if (!CanInput())
+            return;
         if(ctx.started)
             PrepareLaunch();
         else if(ctx.canceled)

@@ -7,6 +7,8 @@
             
             _SrcColorMap ("Source Color Map", 2D) = "white" {}
             _DstColorMap ("Dest Color Map", 2D) = "white" {}
+            
+            _DestYPalette ("Destination Palette Y", Float) = 0.0
         }
      
         SubShader
@@ -44,6 +46,10 @@
                     float2  uv          : TEXCOORD0;
                     UNITY_VERTEX_OUTPUT_STEREO
                 };
+                
+                UNITY_INSTANCING_BUFFER_START(Props)
+                    UNITY_DEFINE_INSTANCED_PROP(float, _DestYPalette)
+                UNITY_INSTANCING_BUFFER_END(Props)
      
                 TEXTURE2D(_MainTex);
                 SAMPLER(sampler_MainTex);
@@ -92,7 +98,8 @@
                         }
                     }
                     
-                    float4 newCol = SAMPLE_TEXTURE2D(_DstColorMap, sampler_DstColorMap, float2(bestFitPixel/paletteWidth, 0.5));
+                    float4 newCol = SAMPLE_TEXTURE2D(_DstColorMap, sampler_DstColorMap, float2(bestFitPixel/paletteWidth, 
+                        UNITY_ACCESS_INSTANCED_PROP(Props, _DestYPalette)));
      
                     return newCol * mainCol.a;
                 }

@@ -27,8 +27,6 @@ public abstract class PlayerBase : MonoBehaviour
     
     protected Vector2 moveInput;
     protected Vector3 spawnPoint;
-
-    protected PlayerInput playerInput;
     
     protected Animator animator;
 
@@ -61,7 +59,6 @@ public abstract class PlayerBase : MonoBehaviour
         box = GetComponent<BoxCollider2D>();
 
         animator = GetComponent<Animator>();
-        playerInput = GetComponent<PlayerInput>();
 
         spawnPoint = transform.position;
     }
@@ -79,22 +76,30 @@ public abstract class PlayerBase : MonoBehaviour
     {
         animator.SetBool(MovingID, Mathf.Abs(rb.linearVelocityX)  > 0.1f);
         animator.SetBool(AirborneID, !IsGrounded());
-        if (moveInput.x > minTurnAmnt)
+        if (CanInput())
         {
-            animator.SetBool(RightID, true);
-        } else if (moveInput.x < -minTurnAmnt)
-        {
-            animator.SetBool(RightID, false);
+            if (moveInput.x > minTurnAmnt)
+            {
+                animator.SetBool(RightID, true);
+            } else if (moveInput.x < -minTurnAmnt)
+            {
+                animator.SetBool(RightID, false);
+            }
         }
+    }
+
+    protected virtual bool CanInput()
+    {
+        return RoundManager.instance.roundStarted;
     }
 
     private void MovementTick()
     {
-        if (Mathf.Abs(moveInput.x) <= 0.05)
+        if (Mathf.Abs(moveInput.x) <= 0.05 && CanInput())
         {
             RBUtils.XDecelRB(rb, GetDeceleration());
         }
-        else
+        else if(CanInput())
         {
             rb.AddForceX(moveInput.x * GetAcceleration() * Time.deltaTime);
         }
@@ -123,6 +128,8 @@ public abstract class PlayerBase : MonoBehaviour
 
     public void InputJump(InputAction.CallbackContext context)
     {
+        if (!CanInput())
+            return;
         if(context.performed)
             Jump();
     }
@@ -189,7 +196,7 @@ public abstract class PlayerBase : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
     }
 
-    public virtual void KillHuman(HumanBase target)
+    public virtual void KillHuman(KillableHuman target)
     {
         target.Kill();
         RoundManager.instance.AddToScore(GetTeam(), 1);

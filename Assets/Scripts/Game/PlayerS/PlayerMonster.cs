@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMonster : PlayerBase
 {
+    private static readonly int BigAnimID = Animator.StringToHash("Big");
     [SerializeField] protected float CrawlspaceSpeed;
     [SerializeField] protected float ConsumeTime;
 
@@ -16,12 +17,10 @@ public class PlayerMonster : PlayerBase
     [SerializeField] private float TendrilCooldown;
 
     private float humanConsumeTimer;
-    private HumanBase currentConsumingHuman;
+    private KillableHuman currentConsumingHuman;
 
     private BoxCollider2D gloobBox;
-    private SpriteRenderer gloobSprite;
     private BoxCollider2D bigBox;
-    private SpriteRenderer bigSprite;
 
     [SerializeField] private GameObject TendrilVisualizerPrefab;
     private GameObject tendrilVisualizer;
@@ -43,8 +42,6 @@ public class PlayerMonster : PlayerBase
         base.Start();
         gloobBox = GetComponents<BoxCollider2D>().First(b => b.enabled);
         bigBox = GetComponents<BoxCollider2D>().First(b => !b.enabled);
-        gloobSprite = GetComponent<SpriteRenderer>();
-        bigSprite = transform.Find("BigSprite").GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
         
         tendrilVisualizer = Instantiate(TendrilVisualizerPrefab);
@@ -67,7 +64,7 @@ public class PlayerMonster : PlayerBase
             ConsumeHumanTick();
 
         var tendrilTransform = GetTendrilTransform();
-        if (tendrilTransform != null && !IsTrapOnCooldown())
+        if (tendrilTransform != null && !IsTrapOnCooldown() && IsInCrawlspace())
         {
             tendrilVisualizer.transform.position = (Vector3)(tendrilTransform?.pos);
             tendrilVisualizer.transform.rotation = (Quaternion)tendrilTransform?.rot;
@@ -114,18 +111,15 @@ public class PlayerMonster : PlayerBase
         {
             box = bigBox;
             bigBox.enabled = true;
-            bigSprite.enabled = true;
             gloobBox.enabled = false;
-            gloobSprite.enabled = false;
         }
         else
         {
             box = gloobBox;
             gloobBox.enabled = true;
-            gloobSprite.enabled = true;
             bigBox.enabled = false;
-            bigSprite.enabled = false;
         }
+        animator.SetBool(BigAnimID, IsInCrawlspace());
     }
 
     protected bool IsConsumingHuman()
@@ -239,6 +233,8 @@ public class PlayerMonster : PlayerBase
 
     public void InputTryLatch(InputAction.CallbackContext context)
     {
+        if (!CanInput())
+            return;
         if (!context.started)
             return;
         if (IsInCrawlspace())

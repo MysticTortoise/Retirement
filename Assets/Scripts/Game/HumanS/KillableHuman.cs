@@ -17,6 +17,8 @@ public class KillableHuman : HumanBase
     [NonSerialized] public float humanKillTimer;
     private float killTimerSwayOffset;
 
+    [SerializeField] private GameObject KillEffectPrefab;
+
     protected override void Update()
     {
         base.Update();
@@ -40,6 +42,13 @@ public class KillableHuman : HumanBase
             
             rb.AddForceX(Mathf.Sin((humanKillTimer + killTimerSwayOffset) * 10) * SwayForce * Time.deltaTime);
         }
+    }
+    
+    public void Kill()
+    {
+        GameObject killFX = Instantiate(KillEffectPrefab);
+        killFX.transform.position = transform.position;
+        Destroy(gameObject);
     }
 
     protected override void UpdateAnims()

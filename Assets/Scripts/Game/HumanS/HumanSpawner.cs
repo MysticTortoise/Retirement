@@ -13,7 +13,7 @@ public class HumanSpawner : MonoBehaviour
     [SerializeField] private int TargetHumanCount;
     [SerializeField] private float BoundsFactor;
 
-    [SerializeField] private GameObject HumanPrefab;
+    [SerializeField] private GameObject[] HumanPrefabs;
     [SerializeField] private LayerMask HumanColMask;
 
     private BoxCollider2D inRangeDontSpawnBox;
@@ -53,11 +53,16 @@ public class HumanSpawner : MonoBehaviour
     private void SpawnHuman()
     {
         timer = 0;
-        GameObject human = Instantiate(HumanPrefab);
+        GameObject human = Instantiate(PickRandomHumanPrefab());
         var humanComp = human.GetComponent<HumanBase>();
         human.transform.position = transform.position;
 
         humans.Add(humanComp);
+    }
+
+    private GameObject PickRandomHumanPrefab()
+    {
+        return HumanPrefabs[Random.Range(0, HumanPrefabs.Length)];
     }
 
     private void SpawnHumanExisting()
@@ -69,7 +74,7 @@ public class HumanSpawner : MonoBehaviour
 
         float xPos = Random.Range(-leftDist, rightDist);
 
-        GameObject human = Instantiate(HumanPrefab);
+        GameObject human = Instantiate(PickRandomHumanPrefab());
         var humanComp = human.GetComponent<HumanBase>();
         human.transform.position = transform.position + Vector3.right * xPos;
         humans.Add(humanComp);
