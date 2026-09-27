@@ -55,6 +55,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "Tutorial",
+                    "type": "Button",
+                    "id": "9f159cb8-73fa-4f13-bbfb-735dabc24b57",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -292,11 +302,55 @@
                 {
                     "name": "",
                     "id": "17415243-7219-4a59-b3ae-e3440c638f4f",
-                    "path": "<HID::2DC8-6012>/button11",
+                    "path": "<HID::2DC8-6012>/button12",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
                     "action": "Start",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d1be4224-2ac8-4dbd-9437-cba6c83ed2f7",
+                    "path": "<Keyboard>/h",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard",
+                    "action": "Tutorial",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d505fa22-f64a-4e28-ab56-adcedf7c2a50",
+                    "path": "<HID::Nintendo Wireless Gamepad>/button9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
+                    "action": "Tutorial",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8d07fa99-fa23-4041-a0f8-26394670bb9a",
+                    "path": "<HID::2DC8-6012>/button11",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Joystick",
+                    "action": "Tutorial",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cb51413d-bee3-4536-9832-c131552b5f8b",
+                    "path": "<Gamepad>/select",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Tutorial",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

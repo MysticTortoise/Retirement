@@ -15,11 +15,14 @@ public class PlayerJoinManager : MonoBehaviour
     public static InputDevice[] inputUsers = new InputDevice[4];
 
     [SerializeField] private InputActionReference StartAction;
+    [SerializeField] private InputActionReference TutorialScreenAction;
 
     [SerializeField] private TextMeshProUGUI CountdownText;
     [SerializeField] private int CountdownSeconds;
     private bool starting;
     private float countdownTimer;
+
+    [SerializeField] private CanvasGroup TutorialGroup;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,6 +36,7 @@ public class PlayerJoinManager : MonoBehaviour
             PlayerUIBoxes[i].UpdateUser(inputUsers[i]);
         }
         StartAction.action.Enable();
+        TutorialScreenAction.action.Enable();
     }
 
     // Update is called once per frame
@@ -53,7 +57,7 @@ public class PlayerJoinManager : MonoBehaviour
             }
         }
 
-        if (StartAction.action.WasPressedThisFrame())
+        if (StartAction.action.WasPressedThisFrame() && !TutorialScreenAction.action.IsPressed())
         {
             if (!starting)
             {
@@ -63,6 +67,17 @@ public class PlayerJoinManager : MonoBehaviour
             {
                 CancelStartGame();
             }
+        }
+
+        if (TutorialScreenAction.action.IsPressed())
+        {
+            TutorialGroup.alpha = Mathf.Clamp(TutorialGroup.alpha + Time.deltaTime * 5, 0, 1);
+            if(starting)
+                CancelStartGame();
+        }
+        else
+        {
+            TutorialGroup.alpha = Mathf.Clamp(TutorialGroup.alpha - Time.deltaTime * 5, 0, 1);
         }
     }
 
