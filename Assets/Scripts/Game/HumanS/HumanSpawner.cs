@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class HumanSpawner : MonoBehaviour
 {
+    private static readonly int OpenID = Animator.StringToHash("Open");
     private HashSet<HumanBase> humans = new();
 
     [SerializeField] private float RespawnTimeAtOneHuman;
@@ -17,6 +18,7 @@ public class HumanSpawner : MonoBehaviour
     [SerializeField] private LayerMask HumanColMask;
 
     private BoxCollider2D inRangeDontSpawnBox;
+    private Animator animator;
     [SerializeField] private ContactFilter2D PlayerContactFilter;
 
     private float timer;
@@ -28,6 +30,7 @@ public class HumanSpawner : MonoBehaviour
             SpawnHumanExisting();
         }
 
+        animator = GetComponent<Animator>();
         inRangeDontSpawnBox = GetComponent<BoxCollider2D>();
     }
 
@@ -49,15 +52,20 @@ public class HumanSpawner : MonoBehaviour
         }
     }
 
-    // ReSharper disable Unity.PerformanceAnalysis
-    private void SpawnHuman()
+    public void SpawnHumanEvent()
     {
-        timer = 0;
         GameObject human = Instantiate(PickRandomHumanPrefab());
         var humanComp = human.GetComponent<HumanBase>();
         human.transform.position = transform.position;
 
         humans.Add(humanComp);
+    }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void SpawnHuman()
+    {
+        timer = 0;
+        animator.SetTrigger(OpenID);
     }
 
     private GameObject PickRandomHumanPrefab()
