@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.Users;
 
 public class MultiPlayerManager : MonoBehaviour
@@ -27,8 +28,9 @@ public class MultiPlayerManager : MonoBehaviour
         if (playerControllers == null)
         {
             playerControllers = InputSystem.devices
-                .Where(d => d is Keyboard or Joystick)
+                .Where(d => d is Keyboard or Joystick or Gamepad)
                 .ToArray();
+            
         }
 
         var spawns = FindObjectsByType<PlayerSpawn>();

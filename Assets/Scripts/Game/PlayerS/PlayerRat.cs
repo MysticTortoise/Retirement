@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerRat : PlayerBase
 {
+    private static readonly int AttachedID = Animator.StringToHash("Attached");
 
     [SerializeField] private float LaunchForce;
 
@@ -48,10 +49,10 @@ public class PlayerRat : PlayerBase
             launchTimer = 0;
         } else if (launchTimer > 0)
         {
+            launchTimer += Time.deltaTime;
             KillableHuman human = CheckForOverlappingHuman();
             if (human)
                 TryLatchHuman(human);
-            launchTimer += Time.deltaTime;
         }
 
         if (latchedHuman)
@@ -72,6 +73,12 @@ public class PlayerRat : PlayerBase
             latchBalance = 0;
             transform.rotation = Quaternion.identity;
         }
+    }
+
+    protected override void UpdateAnims()
+    {
+        base.UpdateAnims();
+        animator.SetBool(AttachedID, latchedHuman);
     }
 
     private void PrepareLaunch()
@@ -115,6 +122,7 @@ public class PlayerRat : PlayerBase
         RBUtils.SetRBFreeze(rb, false);
         human.DetachAttacking(this);
         latchedHuman = null;
+        launchTimer = 0;
     }
 
     public void InputAttack(InputAction.CallbackContext ctx)

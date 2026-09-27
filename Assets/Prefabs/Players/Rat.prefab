@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3495921287340295149, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 6b0da3f1b101929458325b41c49fab6e, type: 2}
     - target: {fileID: 1460986167149845253, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_Name
       value: Rat
@@ -61,17 +65,33 @@ PrefabInstance:
       value: 0.36
       objectReference: {fileID: 0}
     - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.x
+      value: 1.0666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_SpriteTilingProperty.newSize.y
+      value: 0.53333336
+      objectReference: {fileID: 0}
+    - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.8
+      value: 1.0666667
       objectReference: {fileID: 0}
     - target: {fileID: 2483360316213674233, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.4
+      value: 0.53333336
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857295864523707217, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_Size.x
+      value: 1.0666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857295864523707217, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_Size.y
+      value: 0.53333336
       objectReference: {fileID: 0}
     - target: {fileID: 5857295864523707217, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -1613099177, guid: b2177aa6355035840b30a0df80f70758, type: 3}
+      objectReference: {fileID: -7537583821405163682, guid: b2177aa6355035840b30a0df80f70758, type: 3}
     - target: {fileID: 5857295864523707217, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -88,17 +108,37 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5857295864523707217, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5857295864523707217, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 2020b1b1f9972a84998476c65548d0bb, type: 2}
+    - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Controller
+      objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionId
       value: bf31b31f-9e0f-4b00-90f8-1918cec92d33
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
+      value: fdfb60d5-9a17-4062-a75e-c70b63a93150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionName
       value: 'BaseGame/KILL[/Keyboard/e]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
+      value: 'BaseGame/Leave[/Keyboard/q,/Nintendo Wireless Gamepad/button2,/2DC8-6012/button2,/DualSenseGamepadHID/buttonEast]'
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
@@ -188,6 +228,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   LaunchForce: 25
-  LatchForceConversion: 18
+  LatchForceConversion: 50
   LatchMaxAngle: 45
-  LatchInfluenceSpeed: 120
+  LatchInfluenceSpeed: 150

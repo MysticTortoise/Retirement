@@ -71,7 +71,13 @@ public abstract class PlayerBase : MonoBehaviour
     {
         animator.SetBool(MovingID, Mathf.Abs(rb.linearVelocityX)  > 0.1f);
         animator.SetBool(AirborneID, !IsGrounded());
-        animator.SetBool(RightID, rb.linearVelocityX > 0);
+        if (rb.linearVelocityX > 0)
+        {
+            animator.SetBool(RightID, true);
+        } else if (rb.linearVelocityX < 0)
+        {
+            animator.SetBool(RightID, false);
+        }
     }
 
     private void MovementTick()

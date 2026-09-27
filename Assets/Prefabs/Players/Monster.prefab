@@ -205,8 +205,12 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
+      propertyPath: m_DefaultControlScheme
+      value: Keyboard
+      objectReference: {fileID: 0}
+    - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7840085267431193829, guid: 6e2a8ad48b24ed7469204200d43570f5, type: 3}
       propertyPath: m_ActionEvents.Array.data[2].m_ActionId

@@ -28,11 +28,17 @@ public class RoundManager : MonoBehaviour
 
     public static RoundManager instance;
 
+    [NonSerialized] public bool roundStarted = false;
     [NonSerialized] public bool roundOver = false;
     
     private void Start()
     {
         instance = this;
+    }
+
+    void StartRound()
+    {
+        roundStarted = true;
     }
 
     public GameTeam GetWinningTeam()
@@ -52,6 +58,10 @@ public class RoundManager : MonoBehaviour
 
     private void Update()
     {
+        if (!roundStarted)
+        {
+            return;
+        }
         RoundTimeLeft -= Time.deltaTime;
         if (RoundTimeLeft <= 0)
         {
@@ -67,9 +77,11 @@ public class RoundManager : MonoBehaviour
             return;
         }
         
+        RoundTick();
+    }
 
-        
-
+    private void RoundTick()
+    {
         DemonScoreText.text = demonScore.ToString();
         RatScoreText.text = ratScore.ToString();
 
@@ -94,7 +106,7 @@ public class RoundManager : MonoBehaviour
 
     public void AddToScore(GameTeam team, int amount)
     {
-        if (roundOver)
+        if (roundOver || !roundStarted)
             return;
         if (team == GameTeam.Demon)
         {
