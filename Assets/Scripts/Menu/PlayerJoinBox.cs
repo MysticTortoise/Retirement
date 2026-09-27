@@ -19,17 +19,28 @@ public class PlayerJoinBox : MonoBehaviour
     [SerializeField] private float BobSpeed;
     [SerializeField] private float BobOffset;
 
-    public void UpdateUser(InputDevice device)
+    [SerializeField] private AudioSource JoinSound;
+    [SerializeField] private AudioSource LeaveSound;
+
+    public void UpdateUser(InputDevice device, bool playFX)
     {
         if (device != null)
         {
             PlayerText.text = device.displayName;
             CharacterImage.color = EnabledColor;
+            if (playFX)
+            {
+                JoinSound.Play();
+            }
         }
         else
         {
             PlayerText.text = "NO PLAYER";
             CharacterImage.color = DisabledColor;
+            if (playFX)
+            {
+                LeaveSound.Play();
+            }
         }
     }
 

@@ -33,7 +33,7 @@ public class PlayerJoinManager : MonoBehaviour
 
         for(int i = 0; i < inputUsers.Length; i++)
         {
-            PlayerUIBoxes[i].UpdateUser(inputUsers[i]);
+            PlayerUIBoxes[i].UpdateUser(inputUsers[i], false);
         }
         StartAction.action.Enable();
         TutorialScreenAction.action.Enable();
@@ -139,7 +139,7 @@ public class PlayerJoinManager : MonoBehaviour
             if (inputUsers[i] == null)
             {
                 inputUsers[i] = device;
-                PlayerUIBoxes[i].UpdateUser(device);
+                PlayerUIBoxes[i].UpdateUser(device, true);
                 return;
             }
         }
@@ -154,7 +154,7 @@ public class PlayerJoinManager : MonoBehaviour
         int pID = Array.IndexOf(inputUsers, device);
 
         inputUsers.SetValue(null, pID);
-        PlayerUIBoxes[pID].UpdateUser(null);
+        PlayerUIBoxes[pID].UpdateUser(null, true);
     }
 
     private bool IsDeviceAssignedToUser(InputDevice device)
