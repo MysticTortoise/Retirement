@@ -206,7 +206,7 @@ public class HumanBase : MonoBehaviour
         targetX = transform.position.x + amountToWalk;
         EnterState(HumanState.Walking);
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (state == HumanState.Walking)
@@ -215,4 +215,5 @@ public class HumanBase : MonoBehaviour
             Gizmos.DrawLine(transform.position, new Vector3(targetX, transform.position.y, 0));
         }
     }
+    #endif
 }

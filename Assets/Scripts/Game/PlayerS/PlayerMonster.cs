@@ -278,6 +278,7 @@ public class PlayerMonster : PlayerBase
         currentConsumingHuman = null;
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
@@ -292,4 +293,5 @@ public class PlayerMonster : PlayerBase
         Gizmos.DrawRay(transform.position + (Vector3.down * MaxTendrilNearCeilingDepth),
             Vector3.down * MaxTendrilPenetration);
     }
+    #endif
 }

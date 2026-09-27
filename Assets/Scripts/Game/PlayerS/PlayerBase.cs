@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
@@ -180,7 +182,7 @@ public abstract class PlayerBase : MonoBehaviour
         };
         return rb.Overlap(contactFilter2D, col) > 0;
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         if (!rb)
@@ -195,6 +197,7 @@ public abstract class PlayerBase : MonoBehaviour
         var size = new Vector2(box.bounds.size.x * 0.95f, 0.1f);
         Gizmos.DrawWireCube(center, size);
     }
+    #endif
 
     public virtual void KillHuman(KillableHuman target)
     {

@@ -79,7 +79,7 @@ public class HumanSpawner : MonoBehaviour
         human.transform.position = transform.position + Vector3.right * xPos;
         humans.Add(humanComp);
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.blue;
@@ -96,4 +96,5 @@ public class HumanSpawner : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawLine(transform.position - (Vector3.right * leftDist), transform.position + (Vector3.right * rightDist)); 
     }
+    #endif
 }

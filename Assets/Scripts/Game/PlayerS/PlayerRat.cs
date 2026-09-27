@@ -1,9 +1,12 @@
 ﻿
 using System;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 public class PlayerRat : PlayerBase
 {
@@ -246,10 +249,13 @@ public class PlayerRat : PlayerBase
         else if(ctx.canceled)
             Launch();
     }
+    
+#if UNITY_EDITOR
 
     private void OnDrawGizmosSelected()
     {
         Handles.color = Color.gray;
         Handles.Label(transform.position + Vector3.up, "angle - " + latchBalance);
     }
+    #endif
 }
