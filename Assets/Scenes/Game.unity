@@ -4224,7 +4224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef901c0eea6a47ce8340ace721308fc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
-  RoundTimeLeft: 100
+  RoundTimeLeft: 120
   DemonScoreText: {fileID: 1426506277}
   RatScoreText: {fileID: 1035308185}
   TimeLeftText: {fileID: 463209206}

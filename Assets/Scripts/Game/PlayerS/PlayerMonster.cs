@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerMonster : PlayerBase
 {
     private static readonly int BigAnimID = Animator.StringToHash("Big");
+    private static readonly int ClimbingAnimID = Animator.StringToHash("Climbing");
     [SerializeField] protected float CrawlspaceSpeed;
     [SerializeField] protected float ConsumeTime;
 
@@ -80,6 +81,12 @@ public class PlayerMonster : PlayerBase
         }
         
         
+    }
+
+    protected override void UpdateAnims()
+    {
+        base.UpdateAnims();
+        animator.SetBool(ClimbingAnimID, IsConsumingHuman());
     }
 
     private void CheckForRats()
@@ -255,6 +262,7 @@ public class PlayerMonster : PlayerBase
             return;
         if (!human.TryBeginAttacking(this))
             return;
+        KillHuman(human);
         transform.position = human.transform.position;
         RBUtils.SetRBFreeze(rb, true);
         humanConsumeTimer = float.Epsilon;
@@ -273,8 +281,8 @@ public class PlayerMonster : PlayerBase
     private void FinishConsumingHuman()
     {
         humanConsumeTimer = 0;
-        KillHuman(currentConsumingHuman);
         RBUtils.SetRBFreeze(rb, false);
+        rb.linearVelocityY = -10;
         currentConsumingHuman = null;
     }
 

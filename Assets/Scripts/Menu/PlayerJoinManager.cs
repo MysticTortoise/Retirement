@@ -95,6 +95,16 @@ public class PlayerJoinManager : MonoBehaviour
 
     private void BeginStartGame()
     {
+        if (inputUsers[0] == null)
+        {
+            return;
+        }
+
+        if (inputUsers.Count(d => d != null) < 2)
+        {
+            return;
+        }
+        
         starting = true;
         countdownTimer = CountdownSeconds;
         CountdownText.gameObject.SetActive(true);
