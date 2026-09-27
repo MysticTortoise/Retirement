@@ -15,6 +15,11 @@ public class PlayerJoinManager : MonoBehaviour
     public static InputDevice[] inputUsers = new InputDevice[4];
 
     [SerializeField] private InputActionReference StartAction;
+
+    [SerializeField] private TextMeshProUGUI CountdownText;
+    [SerializeField] private int CountdownSeconds;
+    private bool starting;
+    private float countdownTimer;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -33,18 +38,48 @@ public class PlayerJoinManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!starting)
+        {
+            CheckPlayerStatuses();
+        }
+        else
+        {
+            countdownTimer -= Time.deltaTime;
+            CountdownText.text = Mathf.CeilToInt(countdownTimer).ToString();
+
+            if (countdownTimer <= 0)
+            {
+                SceneManager.LoadScene("Game");
+            }
+        }
+
+        if (StartAction.action.WasPressedThisFrame())
+        {
+            if (!starting)
+            {
+                BeginStartGame();
+            }
+            else
+            {
+                CancelStartGame();
+            }
+        }
+    }
+
+    private void CheckPlayerStatuses()
+    {
         foreach (InputDevice device in inputUsers.Where(u => u != null).ToArray())
         {
-                switch (device)
-                {
-                    case Gamepad gamepad when gamepad.buttonEast.wasPressedThisFrame:
-                    case Joystick joystick when joystick.allControls[2].IsPressed():
-                    case Keyboard keyboard when keyboard.qKey.wasPressedThisFrame:
-                        RemovePlayer(device);
-                        return;
-                }
+            switch (device)
+            {
+                case Gamepad gamepad when gamepad.buttonEast.wasPressedThisFrame:
+                case Joystick joystick when joystick.allControls[2].IsPressed():
+                case Keyboard keyboard when keyboard.qKey.wasPressedThisFrame:
+                    RemovePlayer(device);
+                    break;
+            }
         }
-        
+
         foreach (InputDevice inputDevice in InputSystem.devices.Where(inputDevice => !IsDeviceAssignedToUser(inputDevice)))
         {
             switch (inputDevice)
@@ -56,11 +91,19 @@ public class PlayerJoinManager : MonoBehaviour
                     break;
             }
         }
+    }
 
-        if (StartAction.action.IsPressed())
-        {
-            SceneManager.LoadScene("Game");
-        }
+    private void BeginStartGame()
+    {
+        starting = true;
+        countdownTimer = CountdownSeconds;
+        CountdownText.gameObject.SetActive(true);
+    }
+
+    private void CancelStartGame()
+    {
+        starting = false;
+        CountdownText.gameObject.SetActive(false);
     }
 
     // ReSharper disable Unity.PerformanceAnalysis

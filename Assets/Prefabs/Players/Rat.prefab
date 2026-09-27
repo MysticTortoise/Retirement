@@ -241,7 +241,7 @@ MonoBehaviour:
     m_Bits: 256
   LaunchForce: 27
   LatchForceConversion: 60
-  LatchMaxAngle: 55
+  LatchMaxAngle: 70
   LatchInfluenceSpeed: 150
   RatMats:
   - {fileID: 2100000, guid: 2020b1b1f9972a84998476c65548d0bb, type: 2}

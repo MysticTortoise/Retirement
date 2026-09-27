@@ -58,6 +58,11 @@ public class PlayerRat : PlayerBase
         return isLaunching ? float.MaxValue : base.GetMaxSpeed();
     }
 
+    public bool IsDead()
+    {
+        return deadTimer > 0;
+    }
+
     protected override void Start()
     {
         base.Start();
@@ -83,7 +88,7 @@ public class PlayerRat : PlayerBase
             DrawLaunchVis();
         }
 
-        if (deadTimer > 0)
+        if (IsDead())
         {
             deadTimer -= Time.deltaTime;
             if (deadTimer <= 0)
@@ -155,6 +160,8 @@ public class PlayerRat : PlayerBase
 
     public void RatKill()
     {
+        if (IsDead())
+            return;
         deadTimer = RespawnTime;
         playerInput.actions.Disable();
     }
