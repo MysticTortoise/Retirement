@@ -61,6 +61,8 @@ public class PlayerMonster : PlayerBase
 
         base.Update();
 
+        CheckForRats();
+
         if (IsConsumingHuman())
             ConsumeHumanTick();
 
@@ -81,6 +83,29 @@ public class PlayerMonster : PlayerBase
         }
         
         
+    }
+
+    private void CheckForRats()
+    {
+        ContactFilter2D filter = new()
+        {
+            layerMask = 1 << gameObject.layer,
+            useLayerMask = true,
+            useTriggers = false
+        };
+        var cols = new Collider2D[4];
+        Physics2D.OverlapBox(box.bounds.center, box.bounds.size + (Vector3.one * 0.01f), 0, filter, cols);
+
+        foreach (Collider2D col in cols)
+        {
+            if (!col)
+                continue;
+            var rat = col.GetComponent<PlayerRat>();
+            if(!rat)
+                continue;
+            
+            rat.RatKill();
+        }
     }
 
     private void UpdateFormStatus()

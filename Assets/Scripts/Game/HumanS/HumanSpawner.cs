@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -15,6 +16,9 @@ public class HumanSpawner : MonoBehaviour
     [SerializeField] private GameObject HumanPrefab;
     [SerializeField] private LayerMask HumanColMask;
 
+    private BoxCollider2D inRangeDontSpawnBox;
+    [SerializeField] private ContactFilter2D PlayerContactFilter;
+
     private float timer;
 
     private void Start()
@@ -23,6 +27,8 @@ public class HumanSpawner : MonoBehaviour
         {
             SpawnHumanExisting();
         }
+
+        inRangeDontSpawnBox = GetComponent<BoxCollider2D>();
     }
 
     private void Update()
@@ -31,10 +37,15 @@ public class HumanSpawner : MonoBehaviour
         
         int needToSpawn = TargetHumanCount - humans.Count;
 
-        timer += (1/RespawnTimeAtOneHuman) * needToSpawn * Time.deltaTime;
-        if (timer >= 1)
+        var cols = new Collider2D[4];
+        inRangeDontSpawnBox.Overlap(PlayerContactFilter, cols);
+        if (!cols.Any(c => c && c.GetComponent<PlayerBase>()))
         {
-            SpawnHuman();
+            timer += (1/RespawnTimeAtOneHuman) * needToSpawn * Time.deltaTime;
+            if (timer >= 1)
+            {
+                SpawnHuman();
+            }
         }
     }
 
