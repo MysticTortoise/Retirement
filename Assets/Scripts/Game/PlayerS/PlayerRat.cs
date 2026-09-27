@@ -3,6 +3,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 public class PlayerRat : PlayerBase
 {
@@ -24,6 +25,18 @@ public class PlayerRat : PlayerBase
 
     [SerializeField] private float RespawnTime;
     private float deadTimer;
+
+    [SerializeField] private float JumpChargeTime;
+    private float jumpCharge;
+
+    [SerializeField] private int LaunchBubbles;
+    [SerializeField] private Material spriteMaterial;
+    [SerializeField] private Sprite BallSprite;
+    [SerializeField] private Sprite ArrowSprite;
+    
+    private RenderParams matRenderParms;
+    private SpriteParams ballSpriteParms;
+    private SpriteParams arrowSpriteParms;
     
     public override GameTeam GetTeam()
     {
@@ -49,6 +62,9 @@ public class PlayerRat : PlayerBase
     {
         base.Start();
         
+        matRenderParms = new RenderParams(spriteMaterial);
+        ballSpriteParms = new SpriteParams(BallSprite);
+        arrowSpriteParms = new SpriteParams(ArrowSprite);
     }
 
     public override void SetPlayerID(int id)
@@ -60,6 +76,12 @@ public class PlayerRat : PlayerBase
     protected override void Update()
     {
         base.Update();
+
+        if (preppingLaunch)
+        {
+            jumpCharge = Mathf.Clamp(jumpCharge + Time.deltaTime / JumpChargeTime, 0, 1);
+            DrawLaunchVis();
+        }
 
         if (deadTimer > 0)
         {
@@ -101,6 +123,36 @@ public class PlayerRat : PlayerBase
         }
     }
 
+    private Vector3 GetBubblePos(float fac)
+    {
+        float maxDist = jumpCharge * 4;
+        Vector3 targetPos = moveInput * (maxDist * fac);
+        targetPos += transform.position;
+        return targetPos;
+    }
+
+    private float GetBubbleRot()
+    {
+        return Mathf.Atan2(moveInput.y, moveInput.x);
+    }
+
+    private Matrix4x4 GetBubbleMatrix(float fac, bool hasRot)
+    {
+        Quaternion rot = hasRot ? Quaternion.Euler(0,0,GetBubbleRot() * Mathf.Rad2Deg) : Quaternion.identity;
+        return Matrix4x4.TRS(GetBubblePos(fac), rot, Vector3.one);
+    }
+    
+    private void DrawLaunchVis()
+    {
+        Matrix4x4[] ballMatrices = new Matrix4x4[LaunchBubbles];
+        for (int i = 0; i < ballMatrices.Length; i++)
+        {
+            ballMatrices[i] = GetBubbleMatrix((float)i / ballMatrices.Length, false);
+        }
+        Graphics.RenderSpriteInstanced(matRenderParms, ballSpriteParms, 0, ballMatrices);
+        Graphics.RenderSprite(matRenderParms, arrowSpriteParms, 0, GetBubbleMatrix(1, true));
+    }
+
     public void RatKill()
     {
         deadTimer = RespawnTime;
@@ -129,6 +181,7 @@ public class PlayerRat : PlayerBase
         
         RBUtils.SetRBFreeze(rb, true);
         preppingLaunch = true;
+        jumpCharge = 0;
     }
 
     private void Launch()
@@ -139,7 +192,7 @@ public class PlayerRat : PlayerBase
         launchTimer += Time.deltaTime;
         RBUtils.SetRBFreeze(rb, false);
         rb.linearVelocity = Vector2.zero;
-        Vector2 launchForce = moveInput.normalized * LaunchForce;
+        Vector2 launchForce = moveInput.normalized * LaunchForce * jumpCharge;
         
         rb.AddForce(launchForce, ForceMode2D.Impulse);
     }

@@ -19,7 +19,6 @@ public class TentacleTrap : MonoBehaviour
     private RenderParams matRenderParms;
     private SpriteParams ballSpriteParms;
     private SpriteParams tendrilSpriteParms;
-    private Matrix4x4[] spriteMatrices;
 
     private float swayTime;
     private bool disappearing;
