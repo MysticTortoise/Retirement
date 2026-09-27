@@ -73,7 +73,7 @@ public class RoundManager : MonoBehaviour
 
             if (RoundTimeLeft <= -5)
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene("Menu");
             }
             return;
         }

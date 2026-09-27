@@ -85,23 +85,26 @@
                     float bestFit = 999.0;
                     int bestFitPixel = 0;
                     
-                    for (int i = 0; i < paletteWidthI; i++)
+                    for (int x = 0; x < paletteWidthI; x++)
                     {
-                        float4 thisCol = SAMPLE_TEXTURE2D(_SrcColorMap, sampler_SrcColorMap, float2(i/paletteWidth, 0.5));
+                        float4 thisCol = SAMPLE_TEXTURE2D(_SrcColorMap, sampler_SrcColorMap, float2(x/paletteWidth, 0.5));
                         float4 dist = abs(mainCol - thisCol);
                         float distF = dist.x + dist.y + dist.z + dist.z;
                         
                         if (distF < bestFit)
                         {
                             bestFit = distF;
-                            bestFitPixel = i;
+                            bestFitPixel = x;
                         }
                     }
                     
                     float4 newCol = SAMPLE_TEXTURE2D(_DstColorMap, sampler_DstColorMap, float2(bestFitPixel/paletteWidth, 
                         UNITY_ACCESS_INSTANCED_PROP(Props, _DestYPalette)));
+                    
+                    half4 finalCol = newCol * i.color;
+                    finalCol.a *= mainCol.a;
      
-                    return newCol * mainCol.a;
+                    return finalCol;
                 }
                 ENDHLSL
             }

@@ -124,7 +124,7 @@ public class TentacleTrap : MonoBehaviour
             {
                 owner.KillHuman(human);
                 Disappear();
-                return;
+                continue;
             }
 
             var rat = arr[i].GetComponent<PlayerRat>();
@@ -132,7 +132,7 @@ public class TentacleTrap : MonoBehaviour
             {
                 rat.RatKill();
                 Disappear();
-                return;
+                continue;
             }
         }
     }
