@@ -14,9 +14,7 @@ public class PlayerJoinManager : MonoBehaviour
     [SerializeField] private List<PlayerJoinBox> PlayerUIBoxes = new();
 
     public static InputDevice[] inputUsers = new InputDevice[4];
-
-    [SerializeField] private InputActionReference JoinAction;
-    [SerializeField] private InputActionReference LeaveAction;
+    
     [SerializeField] private InputActionReference StartAction;
     [SerializeField] private InputActionReference TutorialScreenAction;
 
@@ -40,8 +38,6 @@ public class PlayerJoinManager : MonoBehaviour
         }
         StartAction.action.Enable();
         TutorialScreenAction.action.Enable();
-        JoinAction.action.Enable();
-        LeaveAction.action.Enable();
     }
 
     // Update is called once per frame

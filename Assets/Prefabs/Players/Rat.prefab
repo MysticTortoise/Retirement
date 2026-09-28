@@ -535,7 +535,7 @@ MonoBehaviour:
   MinStickChangeAngle: 10
   MaxStickChangeAngle: 50
   JumpSnd: {fileID: 3613478208687870043}
-  BiteSnd: {fileID: 0}
+  BiteSnd: {fileID: 5617188108734824968}
   DeathPenalty: 2
 --- !u!4 &1005404294128273599 stripped
 Transform:

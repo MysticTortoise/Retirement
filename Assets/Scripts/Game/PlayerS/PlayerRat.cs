@@ -297,7 +297,6 @@ public class PlayerRat : PlayerBase
 
         latchedHuman = human;
         RBUtils.SetRBFreeze(rb, true);
-        box.enabled = false;
         BiteSnd.Play();
         launchTimer = 0;
     }
@@ -305,7 +304,6 @@ public class PlayerRat : PlayerBase
     public void ReleaseLatchHuman(KillableHuman human)
     {
         RBUtils.SetRBFreeze(rb, false);
-        box.enabled = true;
         human.DetachAttacking(this);
         latchedHuman = null;
         launchTimer = 0;

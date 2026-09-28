@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -95,6 +96,12 @@ public class HumanSpawner : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(transform.position, 0.1f);
+        
+        
+        var cols = new Collider2D[4];
+        inRangeDontSpawnBox.Overlap(PlayerContactFilter, cols);
+        Handles.color = Color.wheat;
+        Handles.Label(transform.position, cols.Count(c => c).ToString());
     }
 
     private void OnDrawGizmosSelected()
