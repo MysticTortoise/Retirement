@@ -193,6 +193,11 @@ public class HumanBase : MonoBehaviour
 
     public void BeginIdleWalk()
     {
+        if (!box)
+        {
+            box = GetComponent<BoxCollider2D>();
+        }
+        
         float leftMaxDist = GetMaxDistanceInDirection(false);
         float rightMaxDist = GetMaxDistanceInDirection(true);
 
