@@ -5,6 +5,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Users;
 using UnityEngine.SceneManagement;
 
@@ -14,6 +15,8 @@ public class PlayerJoinManager : MonoBehaviour
 
     public static InputDevice[] inputUsers = new InputDevice[4];
 
+    [SerializeField] private InputActionReference JoinAction;
+    [SerializeField] private InputActionReference LeaveAction;
     [SerializeField] private InputActionReference StartAction;
     [SerializeField] private InputActionReference TutorialScreenAction;
 
@@ -37,6 +40,8 @@ public class PlayerJoinManager : MonoBehaviour
         }
         StartAction.action.Enable();
         TutorialScreenAction.action.Enable();
+        JoinAction.action.Enable();
+        LeaveAction.action.Enable();
     }
 
     // Update is called once per frame
@@ -88,7 +93,8 @@ public class PlayerJoinManager : MonoBehaviour
             switch (device)
             {
                 case Gamepad gamepad when gamepad.buttonEast.wasPressedThisFrame:
-                case Joystick joystick when joystick.allControls[2].IsPressed():
+                case Joystick joystick when 
+                    joystick.allControls.OfType<ButtonControl>().ToArray()[2].isPressed || joystick.allControls.OfType<ButtonControl>().ToArray()[3].isPressed:
                 case Keyboard keyboard when keyboard.qKey.wasPressedThisFrame:
                     RemovePlayer(device);
                     break;
