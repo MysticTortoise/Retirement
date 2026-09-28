@@ -94,7 +94,7 @@ public class PlayerJoinManager : MonoBehaviour
             {
                 case Gamepad gamepad when gamepad.buttonEast.wasPressedThisFrame:
                 case Joystick joystick when 
-                    joystick.allControls.OfType<ButtonControl>().ToArray()[2].isPressed || joystick.allControls.OfType<ButtonControl>().ToArray()[3].isPressed:
+                    joystick.allControls.OfType<ButtonControl>().ToArray()[2].isPressed || joystick.allControls.OfType<ButtonControl>().ToArray()[1].isPressed:
                 case Keyboard keyboard when keyboard.qKey.wasPressedThisFrame:
                     RemovePlayer(device);
                     break;

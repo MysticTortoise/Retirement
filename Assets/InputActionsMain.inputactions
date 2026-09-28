@@ -203,7 +203,7 @@
                 {
                     "name": "",
                     "id": "b4cba2a4-f09a-45cc-971e-ffc3726b6965",
-                    "path": "<HID::Nintendo Wireless Gamepad>/button3",
+                    "path": "<Joystick>/button3",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Joystick",
@@ -214,7 +214,7 @@
                 {
                     "name": "",
                     "id": "ac6b19ec-ecc3-4730-8953-aef0cdeaa73c",
-                    "path": "<HID::2DC8-6012>/button4",
+                    "path": "<Joystick>/button4",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
@@ -236,32 +236,10 @@
                 {
                     "name": "",
                     "id": "8df1bf2e-3435-4202-a2fe-e3f3d68e3f14",
-                    "path": "<HID::Nintendo Wireless Gamepad>/button2",
+                    "path": "<Joystick>/button2",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Joystick",
-                    "action": "Leave",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f9ef6879-c92c-4c54-a624-c52eb705eb15",
-                    "path": "<HID::2DC8-6012>/button2",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Joystick",
-                    "action": "Leave",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "78b9d717-577a-4095-9ea6-6f441bc18228",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
                     "action": "Leave",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -291,7 +269,7 @@
                 {
                     "name": "",
                     "id": "88d84c39-7248-4688-a810-4f2b617fc5f4",
-                    "path": "<HID::Nintendo Wireless Gamepad>/button10",
+                    "path": "<Joystick>/button10",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
@@ -302,7 +280,7 @@
                 {
                     "name": "",
                     "id": "17415243-7219-4a59-b3ae-e3440c638f4f",
-                    "path": "<HID::2DC8-6012>/button12",
+                    "path": "<Joystick>/button12",
                     "interactions": "",
                     "processors": "",
                     "groups": "Joystick",
@@ -324,7 +302,7 @@
                 {
                     "name": "",
                     "id": "d505fa22-f64a-4e28-ab56-adcedf7c2a50",
-                    "path": "<HID::Nintendo Wireless Gamepad>/button9",
+                    "path": "<Joystick>/button9",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Joystick",
@@ -335,7 +313,7 @@
                 {
                     "name": "",
                     "id": "8d07fa99-fa23-4041-a0f8-26394670bb9a",
-                    "path": "<HID::2DC8-6012>/button11",
+                    "path": "<Joystick>/button11",
                     "interactions": "",
                     "processors": "",
                     "groups": ";Joystick",
