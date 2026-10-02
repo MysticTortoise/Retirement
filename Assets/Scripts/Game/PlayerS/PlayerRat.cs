@@ -88,16 +88,21 @@ public class PlayerRat : PlayerBase
     {
         base.Start();
         
-        matRenderParms = new RenderParams(spriteMaterial);
-        stickRenderParms = new RenderParams(StickSpriteMaterial);
-        ballSpriteParms = new SpriteParams(BallSprite);
-        arrowSpriteParms = new SpriteParams(ArrowSprite);
+        SetupStickRender();
 
         sr = GetComponent<SpriteRenderer>();
         propBlock = new MaterialPropertyBlock();
         sr.GetPropertyBlock(propBlock);
         propBlock.SetFloat(RemapFactorMID, 1);
         sr.SetPropertyBlock(propBlock);
+    }
+
+    private void SetupStickRender()
+    {
+        matRenderParms = new RenderParams(spriteMaterial);
+        stickRenderParms = new RenderParams(StickSpriteMaterial);
+        ballSpriteParms = new SpriteParams(BallSprite);
+        arrowSpriteParms = new SpriteParams(ArrowSprite);
     }
 
     public override void Jump()
@@ -325,6 +330,9 @@ public class PlayerRat : PlayerBase
     {
         Handles.color = Color.gray;
         Handles.Label(transform.position + Vector3.up, "angle - " + latchBalance);
+        
+        SetupStickRender();
+        DrawStickIndicator();
     }
     #endif
 }
