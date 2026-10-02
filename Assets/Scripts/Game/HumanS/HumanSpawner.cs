@@ -96,8 +96,9 @@ public class HumanSpawner : MonoBehaviour
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawSphere(transform.position, 0.1f);
-        
-        
+
+        if (!inRangeDontSpawnBox)
+            return;
         var cols = new Collider2D[4];
         inRangeDontSpawnBox.Overlap(PlayerContactFilter, cols);
         Handles.color = Color.wheat;
